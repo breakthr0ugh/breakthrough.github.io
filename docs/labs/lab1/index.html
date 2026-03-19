@@ -63,7 +63,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="purple" data-md-color-accent="cyan">
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="purple" data-md-color-accent="deep-purple">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1" class="md-skip">
+        <a href="#1-mkdocs-github-pages" class="md-skip">
           Перейти к содержанию
         </a>
       
@@ -84,9 +84,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
     <a href="../.." title="Портфолио с лабораторными работами" class="md-header__button md-logo" aria-label="Портфолио с лабораторными работами" data-md-component="logo">
       
@@ -145,6 +143,8 @@
         </button>
       </nav>
       
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
@@ -170,6 +170,75 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Главная
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Об авторе
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Лабораторные работы
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -183,8 +252,12 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Навигация" data-md-level="0">
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Навигация" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Портфолио с лабораторными работами" class="md-nav__button md-logo" aria-label="Портфолио с лабораторными работами" data-md-component="logo">
       
@@ -263,15 +336,23 @@
     
     
     
+      
+        
+        
+      
+      
+        
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -370,7 +451,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Цель работы
+        Цели
       
     </span>
   </a>
@@ -381,7 +462,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Задание
+        Задачи
       
     </span>
   </a>
@@ -392,10 +473,82 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Код
+        Ход работы
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Ход работы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Подготовка проекта и виртуального окружения
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Создание проекта MkDocs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-mkdocsyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Настройка файла mkdocs.yml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Организация структуры страниц
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Сборка сайта для GitHub Pages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Публикация изменений в GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -489,76 +642,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Содержание">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Содержание
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Цель работы
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Задание
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Код
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Выводы
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -569,17 +652,129 @@
 
 
 
-<h1 id="1">Лабораторная работа 1</h1>
-<p><strong>Тема:</strong> Создание и развертывание статического сайта на базе MkDocs с публикацией на GitHub Pages</p>
-<h2 id="_1">Цель работы</h2>
-<p>1) Освоить процесс создания статического сайта с использованием генератора документации MkDocs.
-2) Научиться организовывать структуру документации проекта (портфолио лабораторных работ).
-3) Изучить базовые принципы работы с системой контроля версий Git и платформой GitHub.
-4) Развернуть статический сайт с использованием механизма GitHub Pages на домене вида username.github.io.
-5) Освоить базовую настройку темы оформления и конфигурационного файла mkdocs.yml.</p>
-<h2 id="_2">Задание</h2>
-<h2 id="_3">Код</h2>
+<h1 id="1-mkdocs-github-pages">Лабораторная работа 1: <em>Создание и развертывание статического сайта на базе MkDocs с публикацией на GitHub Pages</em></h1>
+<h2 id="_1">Цели</h2>
+<ol>
+<li>Освоить процесс создания статического сайта с использованием генератора документации <strong>MkDocs</strong>.</li>
+<li>Научиться организовывать структуру документации проекта (портфолио лабораторных работ).</li>
+<li>Изучить базовые принципы работы с системой контроля версий <strong>Git</strong> и платформой <strong>GitHub</strong>.</li>
+<li>Развернуть статический сайт с использованием механизма <strong>GitHub Pages</strong> на домене вида <code>username.github.io</code>.</li>
+<li>Освоить базовую настройку темы оформления и конфигурационного файла <code>mkdocs.yml</code>.</li>
+</ol>
+<h2 id="_2">Задачи</h2>
+<p>В рамках лабораторной работы требовалось:</p>
+<ul>
+<li>Создать публичный репозиторий GitHub для размещения сайта и настроить публикацию сайта через <strong>GitHub Pages</strong> из каталога <code>/docs</code> ветки <code>main</code></li>
+<li>Клонировать репозиторий на локальный компьютер, создать и активировать виртуальное окружение Python, установить <strong>MkDocs</strong></li>
+<li>Настроить файл <code>.gitignore</code></li>
+<li>Создать новый проект командой <code>mkdocs new source</code> и выполнить локальный запуск сайта с помощью <code>mkdocs serve</code></li>
+<li>Выбрать и подключить тему оформления, настроить файл <code>mkdocs.yml</code>, реализовать логичную структуру сайта и меню, а также создать отдельные страницы для лабораторных работ</li>
+<li>Собрать сайт в каталог <code>/docs</code> командой <code>mkdocs build -d ../docs</code></li>
+<li>Выполнить публикацию проекта в GitHub</li>
+</ul>
+<h2 id="_3">Ход работы</h2>
+<h3 id="1">1. Подготовка проекта и виртуального окружения</h3>
+<p>На первом этапе был создан локальный репозиторий проекта, после чего в корневой директории было настроено виртуальное окружение Python. Это позволило изолировать зависимости проекта и установить <strong>MkDocs</strong> отдельно от глобального окружения системы.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>mkdocs
+</code></pre></div>
+<h3 id="2-mkdocs">2. Создание проекта MkDocs</h3>
+<p>После установки MkDocs был создан новый сайт в отдельной папке <code>source</code>.</p>
+<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>new<span class="w"> </span><span class="nb">source</span>
+<span class="nb">cd</span><span class="w"> </span><span class="nb">source</span>
+mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<p>Такой подход позволил разделить исходные файлы сайта и итоговую сборку для <strong>GitHub Pages</strong>. В результате была сформирована начальная структура проекта с файлом конфигурации <code>mkdocs.yml</code> и каталогом <code>docs/</code>, содержащим Markdown-страницы:</p>
+<div class="highlight"><pre><span></span><code>source/
+├──<span class="w"> </span>mkdocs.yml
+└──<span class="w"> </span>docs/
+<span class="w">    </span>└──<span class="w"> </span>index.md
+</code></pre></div>
+<h3 id="3-mkdocsyml">3. Настройка файла mkdocs.yml</h3>
+<p>Следующим шагом была настройка файла <code>mkdocs.yml</code>.
+В нём были заданы:</p>
+<ul>
+<li>название сайта</li>
+<li>тема оформления</li>
+<li>цветовая палитра</li>
+<li>структура меню через nav</li>
+<li>дополнительные возможности темы Material</li>
+<li>расширения Markdown для улучшения оформления страниц</li>
+</ul>
+<div class="highlight"><pre><span></span><code>site_name:<span class="w"> </span>Портфолио<span class="w"> </span>по<span class="w"> </span>лабораторным<span class="w"> </span>работам
+
+theme:
+<span class="w">  </span>name:<span class="w"> </span>material
+<span class="w">  </span>language:<span class="w"> </span>ru
+<span class="w">  </span>palette:
+<span class="w">    </span>scheme:<span class="w"> </span>slate
+<span class="w">    </span>primary:<span class="w"> </span>purple
+<span class="w">    </span>accent:<span class="w"> </span>deep<span class="w"> </span>purple
+<span class="w">  </span>features:
+<span class="w">    </span>-<span class="w"> </span>navigation.tabs
+<span class="w">    </span>-<span class="w"> </span>navigation.sections
+<span class="w">    </span>-<span class="w"> </span>search.suggest
+
+nav:
+<span class="w">  </span>-<span class="w"> </span>Главная:<span class="w"> </span>index.md
+<span class="w">  </span>-<span class="w"> </span>Об<span class="w"> </span>авторе:<span class="w"> </span>about.md
+<span class="w">  </span>-<span class="w"> </span>Лабораторные<span class="w"> </span>работы:
+<span class="w">      </span>-<span class="w"> </span>Лабораторная<span class="w"> </span>работа<span class="w"> </span><span class="m">1</span>:<span class="w"> </span>labs/lab1.md
+<span class="w">      </span>-<span class="w"> </span>Лабораторная<span class="w"> </span>работа<span class="w"> </span><span class="m">2</span>:<span class="w"> </span>labs/lab2.md
+<span class="w">      </span>-<span class="w"> </span>Лабораторная<span class="w"> </span>работа<span class="w"> </span><span class="m">3</span>:<span class="w"> </span>labs/lab3.md
+
+markdown_extensions:
+<span class="w">  </span>-<span class="w"> </span>admonition
+<span class="w">  </span>-<span class="w"> </span>pymdownx.details
+<span class="w">  </span>-<span class="w"> </span>pymdownx.superfences
+</code></pre></div>
+<h3 id="4">4. Организация структуры страниц</h3>
+<p>В соответствии с требованиями была создана многостраничная структура сайта.
+Итоговая структура исходных файлов выглядит следующим образом:</p>
+<div class="highlight"><pre><span></span><code>source/docs/
+├──<span class="w"> </span>index.md
+├──<span class="w"> </span>about.md
+└──<span class="w"> </span>labs/
+<span class="w">    </span>├──<span class="w"> </span>lab1.md
+<span class="w">    </span>├──<span class="w"> </span>lab2.md
+<span class="w">    </span>└──<span class="w"> </span>lab3.md
+</code></pre></div>
+<p>На странице каждой лабораторной работы был использован единый шаблон отчёта:</p>
+<ul>
+<li>Цели</li>
+<li>Задачи</li>
+<li>Ход работы</li>
+<li>Выводы</li>
+</ul>
+<details class="info">
+<summary>Пояснение</summary>
+<p>Благодаря использованию параметра nav и продуманной структуры файлов удалось реализовать логичную иерархическую навигацию, соответствующую требованиям ЛР.</p>
+</details>
+<h3 id="5-github-pages">5. Сборка сайта для GitHub Pages</h3>
+<p>После завершения настройки страниц и конфигурации была выполнена сборка сайта в каталог <code>/docs</code> корня репозитория.</p>
+<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>build<span class="w"> </span>-d<span class="w"> </span>../docs
+</code></pre></div>
+<p>После выполнения команды в корне репозитория была сформирована готовая версия сайта, содержащая HTML-файлы, стили, скрипты и вспомогательные ресурсы:</p>
+<div class="highlight"><pre><span></span><code>breakthr0ugh.github.io/
+├──<span class="w"> </span>docs/
+│<span class="w">   </span>├──<span class="w"> </span>about/<span class="w"> </span>
+│<span class="w">   </span>├──<span class="w"> </span>assets
+│<span class="w">   </span>├──<span class="w"> </span>labs/
+│<span class="w">   </span>├──<span class="w"> </span>search
+│<span class="w">   </span>└──<span class="w"> </span>index.html
+└──<span class="w"> </span>source/
+<span class="w">    </span>├──<span class="w"> </span>mkdocs.yml
+<span class="w">    </span>└──<span class="w"> </span>docs/
+</code></pre></div>
+<h3 id="6-github">6. Публикация изменений в GitHub</h3>
+<p>Завершающим этапом стала фиксация изменений в Git и их отправка в удалённый репозиторий для дальнейшей публикации обновлённой версии сайта.</p>
 <h2 id="_4">Выводы</h2>
+<p>В ходе выполнения лабораторной работы был разработан и опубликован статический сайт-портфолио на базе <strong>MkDocs</strong> с размещением через <strong>GitHub Pages</strong>.<br />
+В процессе работы была настроена структура проекта, организованы страницы сайта, реализовано меню навигации и выполнена публикация итоговой версии сайта.</p>
+<p>Практически были освоены основные этапы работы со статическим сайтом: создание проекта, настройка <code>mkdocs.yml</code>, выбор темы оформления, локальное тестирование, сборка и публикация.<br />
+Кроме того, была закреплена работа с <strong>Git</strong> и <strong>GitHub</strong>: фиксация изменений, ведение истории коммитов и размещение проекта в удалённом репозитории.</p>
+<p>Таким образом, цель лабораторной работы была достигнута: был создан многостраничный статический сайт, соответствующий требованиям задания и доступный для просмотра в браузере.</p>
 
 
 
@@ -629,7 +824,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

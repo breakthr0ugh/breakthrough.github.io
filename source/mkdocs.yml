@@ -1,5 +1,8 @@
 site_name: Портфолио с лабораторными работами
 
+repo_url: https://github.com/breakthr0ugh/python_itmo
+repo_name: GitHub
+
 theme:
   name: material
   language: ru

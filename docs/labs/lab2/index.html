@@ -1125,11 +1125,12 @@
 <span class="w">    </span>os.makedirs<span class="o">(</span><span class="s2">&quot;plots&quot;</span>,<span class="w"> </span><span class="nv">exist_ok</span><span class="o">=</span>True<span class="o">)</span>
 
 <span class="w">    </span>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
-<span class="w">    </span>plt.hist<span class="o">(</span>data,<span class="w"> </span><span class="nv">bins</span><span class="o">=</span><span class="m">10</span>,<span class="w"> </span><span class="nv">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.title<span class="o">(</span><span class="s2">&quot;Histogram of Math Scores&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.xlabel<span class="o">(</span><span class="s2">&quot;Score&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.ylabel<span class="o">(</span><span class="s2">&quot;Frequency&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.grid<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>,<span class="w"> </span><span class="nv">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.7<span class="o">)</span>
+<span class="w">    </span>plt.hist<span class="o">(</span>data,<span class="w"> </span><span class="nv">bins</span><span class="o">=</span><span class="m">10</span>,<span class="w"> </span><span class="nv">color</span><span class="o">=</span><span class="s2">&quot;#b26ad6&quot;</span>,<span class="w"> </span><span class="nv">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span>,<span class="w"> </span><span class="nv">label</span><span class="o">=</span><span class="s2">&quot;Математика&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.title<span class="o">(</span><span class="s2">&quot;Распределение оценок по математике&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.xlabel<span class="o">(</span><span class="s2">&quot;Балл&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.ylabel<span class="o">(</span><span class="s2">&quot;Количество работ&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.grid<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>,<span class="w"> </span><span class="nv">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.5<span class="o">)</span>
+<span class="w">    </span>plt.legend<span class="o">(</span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Легенда:&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.savefig<span class="o">(</span><span class="s2">&quot;plots/histogram.png&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.close<span class="o">()</span>
 </code></pre></div>
@@ -1145,8 +1146,14 @@
 <span class="w">    </span>os.makedirs<span class="o">(</span><span class="s2">&quot;plots&quot;</span>,<span class="w"> </span><span class="nv">exist_ok</span><span class="o">=</span>True<span class="o">)</span>
 
 <span class="w">    </span>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">6</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
-<span class="w">    </span>sns.heatmap<span class="o">(</span>matrix,<span class="w"> </span><span class="nv">annot</span><span class="o">=</span>True,<span class="w"> </span><span class="nv">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span>,<span class="w"> </span><span class="nv">linewidths</span><span class="o">=</span><span class="m">0</span>.5<span class="o">)</span>
-<span class="w">    </span>plt.title<span class="o">(</span><span class="s2">&quot;Heatmap&quot;</span><span class="o">)</span>
+<span class="w">    </span>sns.heatmap<span class="o">(</span>
+<span class="w">        </span>matrix,
+<span class="w">        </span><span class="nv">annot</span><span class="o">=</span>True,
+<span class="w">        </span><span class="nv">cmap</span><span class="o">=</span><span class="s2">&quot;plasma&quot;</span>,
+<span class="w">        </span><span class="nv">linewidths</span><span class="o">=</span><span class="m">0</span>.5,
+<span class="w">        </span><span class="nv">cbar_kws</span><span class="o">={</span><span class="s2">&quot;label&quot;</span>:<span class="w"> </span><span class="s2">&quot;Коэффициент корреляции&quot;</span><span class="o">}</span>,
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span>plt.title<span class="o">(</span><span class="s2">&quot;Тепловая карта корреляции предметов&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.savefig<span class="o">(</span><span class="s2">&quot;plots/heatmap.png&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.close<span class="o">()</span>
 </code></pre></div>
@@ -1163,11 +1170,12 @@
 <span class="w">    </span>os.makedirs<span class="o">(</span><span class="s2">&quot;plots&quot;</span>,<span class="w"> </span><span class="nv">exist_ok</span><span class="o">=</span>True<span class="o">)</span>
 
 <span class="w">    </span>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
-<span class="w">    </span>plt.plot<span class="o">(</span>x,<span class="w"> </span>y,<span class="w"> </span><span class="nv">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.title<span class="o">(</span><span class="s2">&quot;Student Scores in Math&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.xlabel<span class="o">(</span><span class="s2">&quot;Student&quot;</span><span class="o">)</span>
-<span class="w">    </span>plt.ylabel<span class="o">(</span><span class="s2">&quot;Score&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.plot<span class="o">(</span>x,<span class="w"> </span>y,<span class="w"> </span><span class="nv">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span>,<span class="w"> </span><span class="nv">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>,<span class="w"> </span><span class="nv">color</span><span class="o">=</span><span class="s2">&quot;#b26ad6&quot;</span>,<span class="w"> </span><span class="nv">label</span><span class="o">=</span><span class="s2">&quot;Математика&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.title<span class="o">(</span><span class="s2">&quot;График зависимости: студент/оценка по математике&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.xlabel<span class="o">(</span><span class="s2">&quot;Студент&quot;</span><span class="o">)</span>
+<span class="w">    </span>plt.ylabel<span class="o">(</span><span class="s2">&quot;Балл&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.grid<span class="o">(</span>True,<span class="w"> </span><span class="nv">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.7<span class="o">)</span>
+<span class="w">    </span>plt.legend<span class="o">(</span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Легенда:&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.savefig<span class="o">(</span><span class="s2">&quot;plots/line.png&quot;</span><span class="o">)</span>
 <span class="w">    </span>plt.close<span class="o">()</span>
 </code></pre></div>

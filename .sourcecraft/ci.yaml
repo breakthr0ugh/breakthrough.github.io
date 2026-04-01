@@ -41,7 +41,7 @@ workflows:
                 cd .release-worktree
                 find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
                 mkdir -p site
-                rsync -a ../site/ ./site/
+                rsync -a ../source/site/ ./site/
 
                 git add .
                 git commit -m "Deploy site from main" || echo "No changes to commit"

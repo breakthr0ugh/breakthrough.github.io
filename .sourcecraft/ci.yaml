@@ -1,0 +1,37 @@
+on:
+  push:
+    - workflows: [build-and-deploy-site]
+      filter:
+        branches: ["main"]
+
+workflows:
+  build-and-deploy-site:
+    tasks:
+      - name: build-and-publish
+        cubes:
+          - name: build-mkdocs
+            image: docker.io/library/python:3.12
+            script:
+              - python -m pip install --upgrade pip
+              - pip install mkdocs mkdocs-material
+              - mkdocs build -f source/mkdocs.yml -d site
+
+          - name: publish-release-branch
+            image: docker.io/library/python:3.12
+            env:
+              SC_TOKEN: ${{ secrets.SC_TOKEN }}
+            script:
+              - apt-get update && apt-get install -y git rsync
+              - git config --global user.name "SourceCraft CI"
+              - git config --global user.email "ci@sourcecraft.local"
+              - git clone https://kiuyqu:${SC_TOKEN}@git.sourcecraft.dev/kiuyqu/site-1.git deploy_repo
+              - cd deploy_repo
+              - git checkout release || git checkout --orphan release
+              - find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+              - mkdir -p site
+              - cd ..
+              - rsync -a site/ deploy_repo/site/
+              - cd deploy_repo
+              - git add .
+              - git commit -m "Deploy site from main" || echo "No changes to commit"
+              - git push origin release

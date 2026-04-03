@@ -64,10 +64,10 @@ git remote -v
 Вывод:
 
 ```bash
-origin  https://github.com/breakthr0ugh/breakthrough.github.io.git (fetch)
-origin  https://github.com/breakthr0ugh/breakthrough.github.io.git (push)
-sourcecraft     https://токен.sourcecraft.dev/kiuyqu/site-1.git (fetch)
-sourcecraft     https://токен.sourcecraft.dev/kiuyqu/site-1.git (push)
+origin      https://github.com/breakthr0ugh/breakthrough.github.io.git (fetch)
+origin      https://github.com/breakthr0ugh/breakthrough.github.io.git (push)
+sourcecraft https://git.sourcecraft.dev/kiuyqu/site-1.git (fetch)
+sourcecraft https://git.sourcecraft.dev/kiuyqu/site-1.git (push)
 ```
 
 ### 3. Публикация проекта в SourceCraft

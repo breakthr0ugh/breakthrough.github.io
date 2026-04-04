@@ -13,8 +13,8 @@
 - Реализовать сценарий автоматического развертывания статического сайта на `MkDocs` с использованием **SourceCraft**
 - Реализовать сценарий автоматического развертывания этого же сайта с помощью **GitHub Actions**
 - Использовать один локальный репозиторий, в котором настроены два удаленных репозитория:
-  - `origin` — репозиторий на GitHub
-  - `sourcecraft` — репозиторий на SourceCraft
+    - `origin` — репозиторий на **GitHub**
+    - `sourcecraft` — репозиторий на **SourceCraft**
 
 ## Ход работы
 
@@ -42,7 +42,8 @@ breakthrough.github.io/
 ### 2. Подключение SourceCraft
 
 Для настройки публикации через **SourceCraft** были выполнены следующие действия:
-1.	Выполнена авторизация на сайте sourcecraft.dev с использованием аккаунта Яндекс.
+
+1.	Выполнена авторизация на сайте `sourcecraft.dev` с использованием аккаунта Яндекс.
 2.	Создана публичная организация.
 3.	Внутри организации создан пустой публичный репозиторий `site-1`.
 4.	Создан персональный токен доступа (PAT) для работы по HTTPS.
@@ -80,7 +81,7 @@ git push sourcecraft main
 
 Далее были созданы специальные конфигурационные файлы платформы **SourceCraft** для автоматического развертывания:
 
-1. Файл `.sourcecraft/sites.yaml`
+**Файл `.sourcecraft/sites.yaml`**
 
 Данный файл задает, из какой ветки и из какой директории **SourceCraft** должен публиковать сайт.
 
@@ -93,20 +94,20 @@ site:
 ??? info "Пояснение"
     SourceCraft Sites берет опубликованную версию сайта из ветки release -> папки /site.
 
-2. Файл `.sourcecraft/ci.yaml`
+**Файл `.sourcecraft/ci.yaml`**
 
 Данный файл описывает сценарий автоматической сборки и публикации сайта.
 
 Основная логика:
+
 - при каждом `push` в ветку `main` запускается `workflow build-and-deploy-site`
 - внутри `workflow`: 
-    - устанавливаются `Python`, `mkdocs` и `mkdocs-material`
-    - выполняется сборка сайта
-    - создается или обновляется ветка `release`
-    - готовые файлы сайта копируются в папку `site`
-    - изменения отправляются в `release`
 
-Код:
+    1. устанавливаются `Python`, `mkdocs` и `mkdocs-material`
+    2. выполняется сборка сайта
+    3. создается или обновляется ветка `release`
+    4. готовые файлы сайта копируются в папку `site`
+    5. изменения отправляются в `release`
 
 ```bash
 on:
@@ -165,7 +166,7 @@ workflows:
 ### 4. Настройка деплоя через GitHub Actions
 
 Следующей частью лабораторной работы была настройка автоматической публикации того же сайта через **GitHub Actions** и **GitHub Pages**.
-Для этого в репозитории была создана директория `.github//workflows` и файл `mkdocs.yml` внутри нее. В файле был описан процесс автоматического деплоя при каждом push в ветку main.
+Для этого в репозитории была создана директория `.github//workflows` и файл `mkdocs.yml` внутри нее. В файле был описан процесс автоматического деплоя при каждом `push` в ветку `main`.
 
 Полная конфигурация `workflow`:
 
@@ -222,6 +223,7 @@ jobs:
 ```
 
 Логика `workflow`:
+
 1. Проект клонируется в `runner`
 2. Устанавливается Python 3.12
 3. Устанавливаются `mkdocs` и `mkdocs-material`
@@ -243,11 +245,7 @@ jobs:
 
 Ссылки на результаты:
 
-- Статический сайт на **SourceCraft**:
-*https://kiuyqu.sourcecraft.site/site-1/￼*
-- Репозиторий в **SourceCraft**:
-*https://sourcecraft.dev/kiuyqu/site-1?rev=main￼*
-- Статический сайт на **GitHub Pages**:
-*https://breakthr0ugh.github.io/￼*
-- **GitHub**-репозиторий:
-*https://github.com/breakthr0ugh/breakthrough.github.io￼*
+- [Сайт на SourceCraft](https://kiuyqu.sourcecraft.site/site-1/)
+- [Репозиторий в SourceCraft](https://sourcecraft.dev/kiuyqu/site-1?rev=main)
+- [Сайт на GitHub Pages](https://breakthr0ugh.github.io/)
+- [GitHub-репозиторий](https://github.com/breakthr0ugh/breakthrough.github.io)

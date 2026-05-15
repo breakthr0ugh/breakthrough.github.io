@@ -12,6 +12,8 @@
         <link rel="prev" href="../lab2/">
       
       
+        <link rel="next" href="../lab4/">
+      
       
         
       
@@ -70,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#3" class="md-skip">
+        <a href="#3-cicd-sourcecraft" class="md-skip">
           Перейти к содержанию
         </a>
       
@@ -556,6 +558,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ход работы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Подготовка исходного проекта
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sourcecraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Подключение SourceCraft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-sourcecraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Публикация проекта в SourceCraft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Настройка деплоя через GitHub Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -573,6 +625,62 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторная работа 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторная работа 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -605,11 +713,226 @@
   
 
 
-<h1 id="3">Лабораторная работа 3</h1>
+<h1 id="3-cicd-sourcecraft">Лабораторная работа 3: <em>CI/CD для статического сайта в SourceCraft</em></h1>
 <h2 id="_1">Цели</h2>
+<ol>
+<li>Освоить настройку автоматического развертывания статического сайта, построенного на <code>MkDocs</code>.</li>
+<li>Научиться публиковать один и тот же сайт на двух платформах: <strong>SourceCraft</strong> и <strong>GitHub Pages</strong>.</li>
+<li>Познакомиться с базовой настройкой CI/CD для автоматической сборки и публикации сайта.</li>
+</ol>
 <h2 id="_2">Задачи</h2>
+<p>В рамках лабораторной работы требовалось:</p>
+<ul>
+<li>Реализовать сценарий автоматического развертывания статического сайта на <code>MkDocs</code> с использованием <strong>SourceCraft</strong></li>
+<li>Реализовать сценарий автоматического развертывания этого же сайта с помощью <strong>GitHub Actions</strong></li>
+<li>Использовать один локальный репозиторий, в котором настроены два удаленных репозитория:<ul>
+<li><code>origin</code> — репозиторий на <strong>GitHub</strong></li>
+<li><code>sourcecraft</code> — репозиторий на <strong>SourceCraft</strong></li>
+</ul>
+</li>
+</ul>
 <h2 id="_3">Ход работы</h2>
+<h3 id="1">1. Подготовка исходного проекта</h3>
+<p>В качестве основы использовался ранее созданный статический сайт на <code>MkDocs</code>, который уже содержал структуру страниц, тему оформления и материалы по лабораторным работам.</p>
+<p>Структура проекта после выполнения лабораторной работы приобрела следующий вид:</p>
+<div class="highlight"><pre><span></span><code>breakthrough.github.io/
+├──<span class="w"> </span>.github/
+│<span class="w">   </span>└──<span class="w"> </span>workflows/
+│<span class="w">       </span>└──<span class="w"> </span>mkdocs.yml
+├──<span class="w"> </span>.sourcecraft/
+│<span class="w">   </span>├──<span class="w"> </span>ci.yaml
+│<span class="w">   </span>└──<span class="w"> </span>sites.yaml
+├──<span class="w"> </span>docs/
+├──<span class="w"> </span>source/
+│<span class="w">   </span>└──<span class="w"> </span>mkdocs.yml
+├──<span class="w"> </span>README.md
+└──<span class="w"> </span>...
+</code></pre></div>
+<h3 id="2-sourcecraft">2. Подключение SourceCraft</h3>
+<p>Для настройки публикации через <strong>SourceCraft</strong> были выполнены следующие действия:</p>
+<ol>
+<li>Выполнена авторизация на сайте <code>sourcecraft.dev</code> с использованием аккаунта Яндекс.</li>
+<li>Создана публичная организация.</li>
+<li>Внутри организации создан пустой публичный репозиторий <code>site-1</code>.</li>
+<li>Создан персональный токен доступа (PAT) для работы по HTTPS.</li>
+<li>Для токена были выданы права Maintaine (Ответственный за репозиторий).</li>
+<li>В уже существующий локальный репозиторий был добавлен второй удаленный репозиторий <code>sourcecraft</code>.</li>
+</ol>
+<p>Для добавления удаленного репозитория использовалась команда:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>sourcecraft<span class="w"> </span>https://&lt;имя_аккаунта&gt;:&lt;персональный_токен&gt;@git.sourcecraft.dev/&lt;имя_аккаунта&gt;/&lt;имя_репозитория&gt;.git
+</code></pre></div>
+<p>После этого была выполнена проверка списка удаленных репозиториев командой:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>remote<span class="w"> </span>-v
+</code></pre></div>
+<p>Вывод:</p>
+<div class="highlight"><pre><span></span><code>origin<span class="w">      </span>https://github.com/breakthr0ugh/breakthrough.github.io.git<span class="w"> </span><span class="o">(</span>fetch<span class="o">)</span>
+origin<span class="w">      </span>https://github.com/breakthr0ugh/breakthrough.github.io.git<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
+sourcecraft<span class="w"> </span>https://git.sourcecraft.dev/kiuyqu/site-1.git<span class="w"> </span><span class="o">(</span>fetch<span class="o">)</span>
+sourcecraft<span class="w"> </span>https://git.sourcecraft.dev/kiuyqu/site-1.git<span class="w"> </span><span class="o">(</span>push<span class="o">)</span>
+</code></pre></div>
+<h3 id="3-sourcecraft">3. Публикация проекта в SourceCraft</h3>
+<p>После добавления второго удаленного репозитория локальный проект был отправлен в <strong>SourceCraft</strong>:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>sourcecraft<span class="w"> </span>main
+</code></pre></div>
+<p>Далее были созданы специальные конфигурационные файлы платформы <strong>SourceCraft</strong> для автоматического развертывания:</p>
+<p><strong>Файл <code>.sourcecraft/sites.yaml</code></strong></p>
+<p>Данный файл задает, из какой ветки и из какой директории <strong>SourceCraft</strong> должен публиковать сайт.</p>
+<div class="highlight"><pre><span></span><code>site:
+<span class="w">  </span>root:<span class="w"> </span><span class="s2">&quot;/site&quot;</span>
+<span class="w">  </span>ref:<span class="w"> </span><span class="s2">&quot;release&quot;</span>
+</code></pre></div>
+<details class="info">
+<summary>Пояснение</summary>
+<p>SourceCraft Sites берет опубликованную версию сайта из ветки release -&gt; папки /site.</p>
+</details>
+<p><strong>Файл <code>.sourcecraft/ci.yaml</code></strong></p>
+<p>Данный файл описывает сценарий автоматической сборки и публикации сайта.</p>
+<p>Основная логика:</p>
+<ul>
+<li>при каждом <code>push</code> в ветку <code>main</code> запускается <code>workflow build-and-deploy-site</code></li>
+<li>
+<p>внутри <code>workflow</code>: </p>
+<ol>
+<li>устанавливаются <code>Python</code>, <code>mkdocs</code> и <code>mkdocs-material</code></li>
+<li>выполняется сборка сайта</li>
+<li>создается или обновляется ветка <code>release</code></li>
+<li>готовые файлы сайта копируются в папку <code>site</code></li>
+<li>изменения отправляются в <code>release</code></li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>on:
+<span class="w">  </span>push:
+<span class="w">    </span>-<span class="w"> </span>workflows:<span class="w"> </span><span class="o">[</span>build-and-deploy-site<span class="o">]</span>
+<span class="w">      </span>filter:
+<span class="w">        </span>branches:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;main&quot;</span><span class="o">]</span>
+
+workflows:
+<span class="w">  </span>build-and-deploy-site:
+<span class="w">    </span>tasks:
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>build-and-publish
+<span class="w">        </span>cubes:
+<span class="w">          </span>-<span class="w"> </span>name:<span class="w"> </span>build-and-publish-site
+<span class="w">            </span>image:<span class="w"> </span>docker.io/library/python:3.12
+<span class="w">            </span>script:
+<span class="w">              </span>-<span class="w"> </span><span class="p">|</span>
+<span class="w">                </span><span class="nb">set</span><span class="w"> </span>-e
+
+<span class="w">                </span>apt-get<span class="w"> </span>update
+<span class="w">                </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>git<span class="w"> </span>rsync
+
+<span class="w">                </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+<span class="w">                </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material
+
+<span class="w">                </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;SourceCraft CI&quot;</span>
+<span class="w">                </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;ci@sourcecraft.local&quot;</span>
+
+<span class="w">                </span>mkdocs<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>source/mkdocs.yml<span class="w"> </span>-d<span class="w"> </span>site
+
+<span class="w">                </span>rm<span class="w"> </span>-rf<span class="w"> </span>.release-worktree
+<span class="w">                </span>git<span class="w"> </span>fetch<span class="w"> </span>origin<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+
+<span class="w">                </span><span class="k">if</span><span class="w"> </span>git<span class="w"> </span>show-ref<span class="w"> </span>--verify<span class="w"> </span>--quiet<span class="w"> </span>refs/remotes/origin/release<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span>git<span class="w"> </span>worktree<span class="w"> </span>add<span class="w"> </span>.release-worktree<span class="w"> </span>origin/release
+<span class="w">                </span><span class="k">else</span>
+<span class="w">                  </span>git<span class="w"> </span>worktree<span class="w"> </span>add<span class="w"> </span>--detach<span class="w"> </span>.release-worktree
+<span class="w">                  </span><span class="nb">cd</span><span class="w"> </span>.release-worktree
+<span class="w">                  </span>git<span class="w"> </span>checkout<span class="w"> </span>--orphan<span class="w"> </span>release
+<span class="w">                  </span><span class="nb">cd</span><span class="w"> </span>..
+<span class="w">                </span><span class="k">fi</span>
+
+<span class="w">                </span><span class="nb">cd</span><span class="w"> </span>.release-worktree
+<span class="w">                </span>find<span class="w"> </span>.<span class="w"> </span>-mindepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>!<span class="w"> </span>-name<span class="w"> </span>.git<span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="o">{}</span><span class="w"> </span>+
+<span class="w">                </span>mkdir<span class="w"> </span>-p<span class="w"> </span>site
+<span class="w">                </span>rsync<span class="w"> </span>-a<span class="w"> </span>../source/site/<span class="w"> </span>./site/
+
+<span class="w">                </span>git<span class="w"> </span>add<span class="w"> </span>.
+<span class="w">                </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Deploy site from main&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;No changes to commit&quot;</span>
+<span class="w">                </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>HEAD:release
+
+<span class="w">                </span><span class="nb">cd</span><span class="w"> </span>..
+<span class="w">                </span>git<span class="w"> </span>worktree<span class="w"> </span>remove<span class="w"> </span>.release-worktree<span class="w"> </span>--force
+</code></pre></div>
+<h3 id="4-github-actions">4. Настройка деплоя через GitHub Actions</h3>
+<p>Следующей частью лабораторной работы была настройка автоматической публикации того же сайта через <strong>GitHub Actions</strong> и <strong>GitHub Pages</strong>.
+Для этого в репозитории была создана директория <code>.github//workflows</code> и файл <code>mkdocs.yml</code> внутри нее. В файле был описан процесс автоматического деплоя при каждом <code>push</code> в ветку <code>main</code>.</p>
+<p>Полная конфигурация <code>workflow</code>:</p>
+<div class="highlight"><pre><span></span><code>name:<span class="w"> </span>Deploy<span class="w"> </span>MkDocs<span class="w"> </span>to<span class="w"> </span>GitHub<span class="w"> </span>Pages
+
+on:
+<span class="w">  </span>push:
+<span class="w">    </span>branches:
+<span class="w">      </span>-<span class="w"> </span>main
+<span class="w">  </span>workflow_dispatch:
+
+permissions:
+<span class="w">  </span>contents:<span class="w"> </span><span class="nb">read</span>
+<span class="w">  </span>pages:<span class="w"> </span>write
+<span class="w">  </span>id-token:<span class="w"> </span>write
+
+concurrency:
+<span class="w">  </span>group:<span class="w"> </span>pages
+<span class="w">  </span>cancel-in-progress:<span class="w"> </span><span class="nb">true</span>
+
+jobs:
+<span class="w">  </span>deploy:
+<span class="w">    </span>runs-on:<span class="w"> </span>ubuntu-latest
+<span class="w">    </span>environment:
+<span class="w">      </span>name:<span class="w"> </span>github-pages
+<span class="w">      </span>url:<span class="w"> </span><span class="si">${</span><span class="p">{ steps.deployment.outputs.page_url </span><span class="si">}</span><span class="o">}</span>
+
+<span class="w">    </span>steps:
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Checkout<span class="w"> </span>repository
+<span class="w">        </span>uses:<span class="w"> </span>actions/checkout@v4
+
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Set<span class="w"> </span>up<span class="w"> </span>Python
+<span class="w">        </span>uses:<span class="w"> </span>actions/setup-python@v5
+<span class="w">        </span>with:
+<span class="w">          </span>python-version:<span class="w"> </span><span class="s1">&#39;3.12&#39;</span>
+
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Install<span class="w"> </span>dependencies
+<span class="w">        </span>run:<span class="w"> </span><span class="p">|</span>
+<span class="w">          </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+<span class="w">          </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material
+
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Build<span class="w"> </span>site
+<span class="w">        </span>run:<span class="w"> </span>mkdocs<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>source/mkdocs.yml
+
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Upload<span class="w"> </span>Pages<span class="w"> </span>artifact
+<span class="w">        </span>uses:<span class="w"> </span>actions/upload-pages-artifact@v3
+<span class="w">        </span>with:
+<span class="w">          </span>path:<span class="w"> </span>source/site
+
+<span class="w">      </span>-<span class="w"> </span>name:<span class="w"> </span>Deploy<span class="w"> </span>to<span class="w"> </span>GitHub<span class="w"> </span>Pages
+<span class="w">        </span>id:<span class="w"> </span>deployment
+<span class="w">        </span>uses:<span class="w"> </span>actions/deploy-pages@v4
+</code></pre></div>
+<p>Логика <code>workflow</code>:</p>
+<ol>
+<li>Проект клонируется в <code>runner</code></li>
+<li>Устанавливается Python 3.12</li>
+<li>Устанавливаются <code>mkdocs</code> и <code>mkdocs-material</code></li>
+<li>Выполняется сборка сайта</li>
+<li>Собранный сайт из папки <code>source/site</code> загружается как <code>artifact</code></li>
+<li><code>Artifact</code> автоматически публикуется через <strong>GitHub Pages</strong></li>
+</ol>
 <h2 id="_4">Выводы</h2>
+<p>В ходе выполнения лабораторной работы был реализован сценарий автоматического развертывания статического сайта на движке <code>MkDocs</code> сразу в двух средах: <strong>SourceCraft</strong> и <strong>GitHub Pages</strong>.</p>
+<p>В рамках работы были освоены следующие практические действия:</p>
+<ul>
+<li>Настройка нескольких удаленных репозиториев в одном локальном проекте</li>
+<li>Создание и использование PAT для HTTPS-доступа</li>
+<li>Настройка публикации сайта через <strong>SourceCraft</strong> CI/CD</li>
+<li>Настройка публикации сайта через <strong>GitHub Actions</strong></li>
+<li>Организация CI/CD-процесса для автоматической сборки и развертывания сайта</li>
+</ul>
+<p>Ссылки на результаты:</p>
+<ul>
+<li><a href="https://kiuyqu.sourcecraft.site/site-1/">Сайт на SourceCraft</a></li>
+<li><a href="https://sourcecraft.dev/kiuyqu/site-1?rev=main">Репозиторий в SourceCraft</a></li>
+<li><a href="https://breakthr0ugh.github.io/">Сайт на GitHub Pages</a></li>
+<li><a href="https://github.com/breakthr0ugh/breakthrough.github.io">GitHub-репозиторий</a></li>
+</ul>
 
 
 

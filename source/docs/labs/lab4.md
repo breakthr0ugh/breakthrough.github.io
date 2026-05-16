@@ -152,9 +152,7 @@ knn_model = make_pipeline(
 | Logistic Regression | 0.661806 |
 | SVM | 0.660802 |
 
-!!! note "Вывод"
-    Наилучшее качество показали ансамблевые методы бустинга — Gradient Boosting и HistGradientBoostingClassifier.
-    Они значительно превзошли Logistic Regression, SVM и kNN по метрике ROC-AUC.
+Наилучшее качество показали ансамблевые методы бустинга — Gradient Boosting и HistGradientBoostingClassifier. Они значительно превзошли Logistic Regression, SVM и kNN по метрике ROC-AUC.
 
 Ниже представлен график ROC-кривой для модели с наилучшим значением `ROC-AUC`:
 

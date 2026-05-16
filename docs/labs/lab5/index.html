@@ -12,6 +12,8 @@
         <link rel="prev" href="../lab4/">
       
       
+        <link rel="next" href="../lab6/">
+      
       
         
       
@@ -612,6 +614,100 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ход работы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Загрузка и анализ данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Разделение данных на признаки и целевую переменную
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Обучение базовых моделей регрессии
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Анализ важности признаков
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Исключение наименее значимых признаков
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Исследование параметров Random Forest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Исследование дополнительных моделей регрессии
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Интеграция обученной модели в веб-приложение
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -629,6 +725,90 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторная работа 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторная работа 7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Лабораторная работа 8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -663,9 +843,534 @@
 
 <h1 id="5-scikit-learn">Лабораторная работа 5: <em>Регрессия с применением Scikit-Learn</em></h1>
 <h2 id="_1">Цели</h2>
+<ol>
+<li>Изучить применение библиотеки <strong>Scikit-Learn</strong> для решения задачи регрессии.</li>
+<li>Освоить базовые этапы построения модели машинного обучения для предсказания числового значения.</li>
+<li>Исследовать качество разных моделей регрессии на задаче предсказания стоимости недвижимости.</li>
+<li>Сравнить влияние отбора признаков, настройки гиперпараметров и выбора алгоритма на итоговую ошибку модели.</li>
+</ol>
 <h2 id="_2">Задачи</h2>
+<p>В рамках лабораторной работы требовалось:</p>
+<ul>
+<li>Загрузить и проанализировать данные о стоимости недвижимости, разделить данные на признаки и целевую переменную</li>
+<li>Обучить модели регрессии с помощью <strong>Scikit-Learn</strong></li>
+<li>Оценить качество моделей с использованием метрик <code>MAE</code>, <code>MSE</code> и <code>RMSE</code></li>
+<li>Проанализировать важность признаков и исключить наименее значимые признаки, затем проверить изменение качества моделей</li>
+<li>Исследовать параметры модели <code>RandomForestRegressor</code></li>
+<li>Проверить дополнительные модели регрессии и сравнить их с базовыми моделями</li>
+<li>Рассмотреть способ интеграции обученной ML-модели в веб-приложение на Flask, Django или FastAPI</li>
+</ul>
 <h2 id="_3">Ход работы</h2>
+<h3 id="1">1. Загрузка и анализ данных</h3>
+<p>В качестве исходных данных использовался датасет с информацией о недвижимости в округе Кинг, штат Вашингтон, США.<br />
+Целью задачи являлось предсказание стоимости дома на основе его характеристик.</p>
+<p>Загрузка обучающей выборки выполнялась с помощью функции <code>read_excel()</code>. После загрузки была выполнена проверка первых строк таблицы, а также был проверен размер обучающей выборки.</p>
+<p>Для получения общей информации о данных использовался метод <code>info()</code>.</p>
+<h3 id="2">2. Разделение данных на признаки и целевую переменную</h3>
+<p>Значения целевой переменной (цена недвижимости) были вынесены в отдельную переменную:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">training_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>training_data<span class="o">[</span>target_variable_name<span class="o">]</span>
+</code></pre></div>
+<p>После этого из обучающей таблицы был удален столбец с ценой, чтобы получить таблицу входных признаков:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">training_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>training_data.drop<span class="o">(</span>target_variable_name,<span class="w"> </span><span class="nv">axis</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>
+</code></pre></div>
+<p>Таким образом, были получены:</p>
+<ul>
+<li><code>training_values</code> — настоящие значения цен домов</li>
+<li><code>training_points</code> — признаки, по которым модель должна предсказывать цену</li>
+</ul>
+<h3 id="3">3. Обучение базовых моделей регрессии</h3>
+<p>В качестве базовых моделей были рассмотрены:</p>
+<ul>
+<li><code>LinearRegression</code></li>
+<li><code>RandomForestRegressor</code></li>
+</ul>
+<p>Тестовая выборка была загружена аналогично обучающей:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">test_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.read_excel<span class="o">(</span><span class="s1">&#39;predict_house_price_test_data.xlsx&#39;</span><span class="o">)</span>
+</code></pre></div>
+<p>Целевая переменная была отделена от входных признаков:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">test_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>test_data<span class="o">[</span>target_variable_name<span class="o">]</span>
+<span class="nv">test_points</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>test_data.drop<span class="o">(</span>target_variable_name,<span class="w"> </span><span class="nv">axis</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>
+</code></pre></div>
+<p>В результате были получены:</p>
+<ul>
+<li><code>test_values</code> — настоящие цены объектов недвижимости из тестовой выборки</li>
+<li><code>test_points</code> — признаки объектов недвижимости из тестовой выборки</li>
+</ul>
+<p>Для получения предсказаний использовался метод <code>predict()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">test_predictions_linear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>linear_regression_model.predict<span class="o">(</span>test_points<span class="o">)</span>
+<span class="nv">test_predictions_random_forest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>random_forest_model.predict<span class="o">(</span>test_points<span class="o">)</span>
+</code></pre></div>
+<p>Качество моделей оценивалось с помощью метрик регрессии:</p>
+<ul>
+<li>MAE</li>
+<li>MSE</li>
+<li>RMSE</li>
+</ul>
+<p>Для расчета метрик использовались функции из <code>sklearn.metrics</code>.</p>
+<p>Расчет ошибок для линейной регрессии:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">mean_absolute_error_linear_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mean_absolute_error<span class="o">(</span>
+<span class="w">    </span>test_values,
+<span class="w">    </span>test_predictions_linear
+<span class="o">)</span>
+<span class="nv">mean_squared_error_linear_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mean_squared_error<span class="o">(</span>
+<span class="w">    </span>test_values,
+<span class="w">    </span>test_predictions_linear
+<span class="o">)</span>
+</code></pre></div>
+<p>Расчет ошибок для случайного леса:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">mean_absolute_error_random_forest_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mean_absolute_error<span class="o">(</span>
+<span class="w">    </span>test_values,
+<span class="w">    </span>test_predictions_random_forest
+<span class="o">)</span>
+<span class="nv">mean_squared_error_random_forest_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mean_squared_error<span class="o">(</span>
+<span class="w">    </span>test_values,
+<span class="w">    </span>test_predictions_random_forest
+<span class="o">)</span>
+</code></pre></div>
+<details class="info">
+<summary>Пояснение</summary>
+<p>MAE показывает среднюю абсолютную ошибку модели.
+MSE показывает среднюю квадратичную ошибку и сильнее штрафует большие отклонения.
+RMSE — корень из MSE. Эта метрика удобна для интерпретации, потому что измеряется в тех же единицах, что и целевая переменная, то есть в долларах.</p>
+</details>
+<p>Результаты базовых моделей:</p>
+<table>
+<thead>
+<tr>
+<th>Модель</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;">MSE</th>
+<th style="text-align: right;">RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear Regression</td>
+<td style="text-align: right;">126852.51</td>
+<td style="text-align: right;">40756840000</td>
+<td style="text-align: right;">201883.24</td>
+</tr>
+<tr>
+<td>Random Forest базовый</td>
+<td style="text-align: right;">70896.79</td>
+<td style="text-align: right;">18364750000</td>
+<td style="text-align: right;">135516.61</td>
+</tr>
+</tbody>
+</table>
+<p>По результатам сравнения видно, что модель случайного леса справилась с задачей значительно лучше линейной регрессии.
+Значение RMSE у <code>RandomForestRegressor</code> оказалось меньше, чем у <code>LinearRegression</code>, поэтому случайный лес был выбран как более сильная базовая модель для дальнейших экспериментов.</p>
+<h3 id="4">4. Анализ важности признаков</h3>
+<p>Для анализа влияния признаков на результат была использована модель <code>RandomForestRegressor</code>.
+У обученной модели была получена оценка важности признаков:</p>
+<div class="highlight"><pre><span></span><code>random_forest_model.feature_importances_
+</code></pre></div>
+<p>Для удобного представления результатов была создана таблица:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">feature_importance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.DataFrame<span class="o">(</span><span class="nv">columns</span><span class="o">=[</span>
+<span class="w">    </span><span class="s1">&#39;Название признака&#39;</span>,
+<span class="w">    </span><span class="s1">&#39;Важность признака&#39;</span>
+<span class="o">])</span>
+feature_importance<span class="o">[</span><span class="s1">&#39;Название признака&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>training_points.keys<span class="o">()</span>
+feature_importance<span class="o">[</span><span class="s1">&#39;Важность признака&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>random_forest_model.feature_importances_
+</code></pre></div>
+<p>Затем признаки были отсортированы по убыванию важности:</p>
+<div class="highlight"><pre><span></span><code>feature_importance.sort_values<span class="o">(</span>
+<span class="w">    </span><span class="nv">by</span><span class="o">=</span><span class="s1">&#39;Важность признака&#39;</span>,
+<span class="w">    </span><span class="nv">ascending</span><span class="o">=</span>False
+<span class="o">)</span>
+</code></pre></div>
+<p>Наиболее значимыми признаками оказались:</p>
+<ol>
+<li>Оценка риелтора</li>
+<li>Жилая площадь</li>
+<li>Широта</li>
+<li>Долгота</li>
+<li>Год постройки</li>
+</ol>
+<p>Наименее значимыми признаками оказались:</p>
+<ol>
+<li>Год реновации</li>
+<li>Количество этажей</li>
+<li>Спальни</li>
+<li>Состояние</li>
+<li>Площадь подвала</li>
+</ol>
+<h3 id="5">5. Исключение наименее значимых признаков</h3>
+<p>В рамках самостоятельной части были исключены пять признаков с наименьшей важностью:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">low_importance_features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="s1">&#39;Год реновации&#39;</span>,
+<span class="w">    </span><span class="s1">&#39;Количество этажей&#39;</span>,
+<span class="w">    </span><span class="s1">&#39;Спальни&#39;</span>,
+<span class="w">    </span><span class="s1">&#39;Состояние&#39;</span>,
+<span class="w">    </span><span class="s1">&#39;Площадь подвала&#39;</span>
+<span class="o">]</span>
+</code></pre></div>
+<p>После этого были сформированы новые обучающая и тестовая выборки:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">training_points_reduced</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>training_points.drop<span class="o">(</span>
+<span class="w">    </span>low_importance_features,
+<span class="w">    </span><span class="nv">axis</span><span class="o">=</span><span class="m">1</span>
+<span class="o">)</span>
+<span class="nv">test_points_reduced</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>test_points.drop<span class="o">(</span>
+<span class="w">    </span>low_importance_features,
+<span class="w">    </span><span class="nv">axis</span><span class="o">=</span><span class="m">1</span>
+<span class="o">)</span>
+</code></pre></div>
+<p>На сокращенном наборе признаков были повторно обучены модели линейной регрессии и случайного леса.</p>
+<p>Результаты сравнения:</p>
+<table>
+<thead>
+<tr>
+<th>Модель</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;">MSE</th>
+<th style="text-align: right;">RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear Regression</td>
+<td style="text-align: right;">126852.51</td>
+<td style="text-align: right;">40756840000</td>
+<td style="text-align: right;">201883.24</td>
+</tr>
+<tr>
+<td>Linear Regression без слабых признаков</td>
+<td style="text-align: right;">128146.14</td>
+<td style="text-align: right;">41484850000</td>
+<td style="text-align: right;">203678.30</td>
+</tr>
+<tr>
+<td>Random Forest базовый</td>
+<td style="text-align: right;">70896.79</td>
+<td style="text-align: right;">18364750000</td>
+<td style="text-align: right;">135516.61</td>
+</tr>
+<tr>
+<td>Random Forest без слабых признаков</td>
+<td style="text-align: right;">71150.49</td>
+<td style="text-align: right;">18301270000</td>
+<td style="text-align: right;">135282.18</td>
+</tr>
+</tbody>
+</table>
+<p>После исключения слабых признаков качество модели <code>RandomForestRegressor</code> немного улучшилось: RMSE уменьшилось с 135516.61 до 135282.18.
+Однако для линейной регрессии результат ухудшился: RMSE выросло с 201883.24 до 203678.30.</p>
+<h3 id="6-random-forest">6. Исследование параметров Random Forest</h3>
+<p>Далее были исследованы параметры модели <code>RandomForestRegressor</code>.</p>
+<p>Рассматривались следующие параметры:</p>
+<ul>
+<li><code>n_estimators</code> — количество деревьев в лесу</li>
+<li><code>max_depth</code> — максимальная глубина дерева</li>
+<li><code>min_samples_leaf</code> — минимальное количество объектов в листе</li>
+</ul>
+<p>Пример создания модели с заданными параметрами:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ensemble.RandomForestRegressor<span class="o">(</span>
+<span class="w">    </span><span class="nv">n_estimators</span><span class="o">=</span><span class="m">200</span>,
+<span class="w">    </span><span class="nv">max_depth</span><span class="o">=</span><span class="m">20</span>,
+<span class="w">    </span><span class="nv">min_samples_leaf</span><span class="o">=</span><span class="m">3</span>,
+<span class="w">    </span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,
+<span class="w">    </span><span class="nv">n_jobs</span><span class="o">=</span>-1
+<span class="o">)</span>
+</code></pre></div>
+<p>Параметр <code>n_jobs</code>=-1 использовался для ускорения обучения модели за счет использования всех доступных ядер процессора.</p>
+<p>Были проверены разные комбинации параметров. Лучшие результаты среди вариантов случайного леса:</p>
+<table>
+<thead>
+<tr>
+<th>Модель</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;">MSE</th>
+<th style="text-align: right;">RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RF n=200, depth=20, leaf=3</td>
+<td style="text-align: right;">70596.74</td>
+<td style="text-align: right;">18125590000</td>
+<td style="text-align: right;">134631.32</td>
+</tr>
+<tr>
+<td>RF n=50, depth=None, leaf=1</td>
+<td style="text-align: right;">71272.34</td>
+<td style="text-align: right;">18143060000</td>
+<td style="text-align: right;">134696.19</td>
+</tr>
+<tr>
+<td>RF n=200, depth=15, leaf=1</td>
+<td style="text-align: right;">70925.67</td>
+<td style="text-align: right;">18191330000</td>
+<td style="text-align: right;">134875.23</td>
+</tr>
+<tr>
+<td>RF n=100, depth=15, leaf=1</td>
+<td style="text-align: right;">71211.92</td>
+<td style="text-align: right;">18235830000</td>
+<td style="text-align: right;">135040.11</td>
+</tr>
+<tr>
+<td>Random Forest базовый</td>
+<td style="text-align: right;">70896.79</td>
+<td style="text-align: right;">18364750000</td>
+<td style="text-align: right;">135516.61</td>
+</tr>
+</tbody>
+</table>
+<p>Лучший результат среди моделей <code>Random Forest</code> показала модель со следующими параметрами:</p>
+<ul>
+<li><code>n_estimators</code> = 200</li>
+<li><code>max_depth</code> = 20</li>
+<li><code>min_samples_leaf</code> = 3</li>
+</ul>
+<p>Для этой модели значение RMSE составило 134631.32, тогда как у базового случайного леса RMSE было равно 135516.61.</p>
+<h3 id="7">7. Исследование дополнительных моделей регрессии</h3>
+<p>Кроме линейной регрессии и случайного леса были рассмотрены дополнительные модели регрессии:</p>
+<ul>
+<li><code>DecisionTreeRegressor</code></li>
+<li><code>ExtraTreesRegressor</code></li>
+<li><code>GradientBoostingRegressor</code></li>
+<li><code>HistGradientBoostingRegressor</code></li>
+</ul>
+<p>Пример списка моделей для эксперимента:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">other_models</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">(</span>
+<span class="w">        </span><span class="s1">&#39;Decision Tree&#39;</span>,
+<span class="w">        </span>DecisionTreeRegressor<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span><span class="o">)</span>
+<span class="w">    </span><span class="o">)</span>,
+<span class="w">    </span><span class="o">(</span>
+<span class="w">        </span><span class="s1">&#39;Extra Trees&#39;</span>,
+<span class="w">        </span>ExtraTreesRegressor<span class="o">(</span>
+<span class="w">            </span><span class="nv">n_estimators</span><span class="o">=</span><span class="m">200</span>,
+<span class="w">            </span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,
+<span class="w">            </span><span class="nv">n_jobs</span><span class="o">=</span>-1
+<span class="w">        </span><span class="o">)</span>
+<span class="w">    </span><span class="o">)</span>,
+<span class="w">    </span><span class="o">(</span>
+<span class="w">        </span><span class="s1">&#39;Gradient Boosting&#39;</span>,
+<span class="w">        </span>GradientBoostingRegressor<span class="o">(</span>
+<span class="w">            </span><span class="nv">n_estimators</span><span class="o">=</span><span class="m">200</span>,
+<span class="w">            </span><span class="nv">learning_rate</span><span class="o">=</span><span class="m">0</span>.05,
+<span class="w">            </span><span class="nv">max_depth</span><span class="o">=</span><span class="m">3</span>,
+<span class="w">            </span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>
+<span class="w">        </span><span class="o">)</span>
+<span class="w">    </span><span class="o">)</span>,
+<span class="w">    </span><span class="o">(</span>
+<span class="w">        </span><span class="s1">&#39;Hist Gradient Boosting&#39;</span>,
+<span class="w">        </span>HistGradientBoostingRegressor<span class="o">(</span>
+<span class="w">            </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">300</span>,
+<span class="w">            </span><span class="nv">learning_rate</span><span class="o">=</span><span class="m">0</span>.05,
+<span class="w">            </span><span class="nv">max_leaf_nodes</span><span class="o">=</span><span class="m">31</span>,
+<span class="w">            </span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>
+<span class="w">        </span><span class="o">)</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="o">]</span>
+</code></pre></div>
+<p>Для оценки моделей была написана вспомогательная функция:</p>
+<div class="highlight"><pre><span></span><code>def<span class="w"> </span>evaluate_model<span class="o">(</span>model,<span class="w"> </span>train_X,<span class="w"> </span>train_y,<span class="w"> </span>test_X,<span class="w"> </span>test_y,<span class="w"> </span>model_name<span class="o">)</span>:
+<span class="w">    </span>model.fit<span class="o">(</span>train_X,<span class="w"> </span>train_y<span class="o">)</span>
+<span class="w">    </span><span class="nv">predictions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>model.predict<span class="o">(</span>test_X<span class="o">)</span>
+<span class="w">    </span><span class="nv">mae</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mean_absolute_error<span class="o">(</span>test_y,<span class="w"> </span>predictions<span class="o">)</span>
+<span class="w">    </span><span class="nv">mse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mean_squared_error<span class="o">(</span>test_y,<span class="w"> </span>predictions<span class="o">)</span>
+<span class="w">    </span><span class="nv">rmse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.sqrt<span class="o">(</span>mse<span class="o">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s1">&#39;Модель&#39;</span>:<span class="w"> </span>model_name,
+<span class="w">        </span><span class="s1">&#39;MAE&#39;</span>:<span class="w"> </span>mae,
+<span class="w">        </span><span class="s1">&#39;MSE&#39;</span>:<span class="w"> </span>mse,
+<span class="w">        </span><span class="s1">&#39;RMSE&#39;</span>:<span class="w"> </span>rmse
+<span class="w">    </span><span class="o">}</span>
+</code></pre></div>
+<p>Итоговые результаты сравнения моделей:</p>
+<table>
+<thead>
+<tr>
+<th>Модель</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;">MSE</th>
+<th style="text-align: right;">RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hist Gradient Boosting</td>
+<td style="text-align: right;">67889.44</td>
+<td style="text-align: right;">14969960000</td>
+<td style="text-align: right;">122351.79</td>
+</tr>
+<tr>
+<td>RF n=200, depth=20, leaf=3</td>
+<td style="text-align: right;">70596.74</td>
+<td style="text-align: right;">18125590000</td>
+<td style="text-align: right;">134631.32</td>
+</tr>
+<tr>
+<td>RF n=50, depth=None, leaf=1</td>
+<td style="text-align: right;">71272.34</td>
+<td style="text-align: right;">18143060000</td>
+<td style="text-align: right;">134696.19</td>
+</tr>
+<tr>
+<td>RF n=200, depth=15, leaf=1</td>
+<td style="text-align: right;">70925.67</td>
+<td style="text-align: right;">18191330000</td>
+<td style="text-align: right;">134875.23</td>
+</tr>
+<tr>
+<td>RF n=100, depth=15, leaf=1</td>
+<td style="text-align: right;">71211.92</td>
+<td style="text-align: right;">18235830000</td>
+<td style="text-align: right;">135040.11</td>
+</tr>
+<tr>
+<td>Random Forest без слабых признаков</td>
+<td style="text-align: right;">71150.49</td>
+<td style="text-align: right;">18301270000</td>
+<td style="text-align: right;">135282.18</td>
+</tr>
+<tr>
+<td>Random Forest базовый</td>
+<td style="text-align: right;">70896.79</td>
+<td style="text-align: right;">18364750000</td>
+<td style="text-align: right;">135516.61</td>
+</tr>
+<tr>
+<td>Extra Trees</td>
+<td style="text-align: right;">72038.26</td>
+<td style="text-align: right;">19086620000</td>
+<td style="text-align: right;">138154.32</td>
+</tr>
+<tr>
+<td>Gradient Boosting</td>
+<td style="text-align: right;">78886.73</td>
+<td style="text-align: right;">19215750000</td>
+<td style="text-align: right;">138620.87</td>
+</tr>
+<tr>
+<td>Decision Tree</td>
+<td style="text-align: right;">102076.31</td>
+<td style="text-align: right;">40123210000</td>
+<td style="text-align: right;">200307.79</td>
+</tr>
+<tr>
+<td>Linear Regression</td>
+<td style="text-align: right;">126852.51</td>
+<td style="text-align: right;">40756840000</td>
+<td style="text-align: right;">201883.24</td>
+</tr>
+<tr>
+<td>Linear Regression без слабых признаков</td>
+<td style="text-align: right;">128146.14</td>
+<td style="text-align: right;">41484850000</td>
+<td style="text-align: right;">203678.30</td>
+</tr>
+</tbody>
+</table>
+<p>Для наглядного сравнения моделей был построен график значений <code>RMSE</code>:</p>
+<p><img alt="Сравнение моделей по RMSE" src="../../images/lab5/rmse_models_comparison.png" /></p>
+<p>Наилучшее качество показала модель <code>HistGradientBoostingRegressor</code>.</p>
+<p>Ее результат:</p>
+<table>
+<thead>
+<tr>
+<th>Метрика</th>
+<th style="text-align: right;">Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAE</td>
+<td style="text-align: right;">67889.44</td>
+</tr>
+<tr>
+<td>MSE</td>
+<td style="text-align: right;">14969960000</td>
+</tr>
+<tr>
+<td>RMSE</td>
+<td style="text-align: right;">122351.79</td>
+</tr>
+</tbody>
+</table>
+<p>Базовый <code>RandomForestRegressor</code> имел значение RMSE = 135516.61.</p>
+<p>Улучшение по RMSE составило:</p>
+<p>135516.61 - 122351.79 = 13164.82</p>
+<p>В процентном выражении ошибка уменьшилась примерно на 9.72%.</p>
+<h3 id="8-">8. Интеграция обученной модели в веб-приложение</h3>
+<p>Обученную модель машинного обучения можно интегрировать в веб-приложение, реализованное с помощью <strong>Flask</strong>, <strong>Django</strong> или <strong>FastAPI</strong>.</p>
+<p>Пример интеграции с <strong>FastAPI</strong>:</p>
+<div class="highlight"><pre><span></span><code>from<span class="w"> </span>fastapi<span class="w"> </span>import<span class="w"> </span>FastAPI
+from<span class="w"> </span>pydantic<span class="w"> </span>import<span class="w"> </span>BaseModel
+import<span class="w"> </span>joblib
+import<span class="w"> </span>pandas<span class="w"> </span>as<span class="w"> </span>pd
+<span class="nv">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>FastAPI<span class="o">()</span>
+<span class="nv">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>joblib.load<span class="o">(</span><span class="s1">&#39;house_price_model.pkl&#39;</span><span class="o">)</span>
+class<span class="w"> </span>HouseFeatures<span class="o">(</span>BaseModel<span class="o">)</span>:
+<span class="w">    </span>bedrooms:<span class="w"> </span>int
+<span class="w">    </span>bathrooms:<span class="w"> </span>float
+<span class="w">    </span>living_area:<span class="w"> </span>float
+<span class="w">    </span>total_area:<span class="w"> </span>float
+<span class="w">    </span>floors:<span class="w"> </span>float
+<span class="w">    </span>waterfront:<span class="w"> </span>int
+<span class="w">    </span>viewed:<span class="w"> </span>int
+<span class="w">    </span>condition:<span class="w"> </span>int
+<span class="w">    </span>grade:<span class="w"> </span>int
+<span class="w">    </span>area_without_basement:<span class="w"> </span>float
+<span class="w">    </span>basement_area:<span class="w"> </span>float
+<span class="w">    </span>year_built:<span class="w"> </span>int
+<span class="w">    </span>year_renovated:<span class="w"> </span>int
+<span class="w">    </span>latitude:<span class="w"> </span>float
+<span class="w">    </span>longitude:<span class="w"> </span>float
+@app.post<span class="o">(</span><span class="s1">&#39;/predict&#39;</span><span class="o">)</span>
+def<span class="w"> </span>predict_price<span class="o">(</span>features:<span class="w"> </span>HouseFeatures<span class="o">)</span>:
+<span class="w">    </span><span class="nv">input_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.DataFrame<span class="o">([{</span>
+<span class="w">        </span><span class="s1">&#39;Спальни&#39;</span>:<span class="w"> </span>features.bedrooms,
+<span class="w">        </span><span class="s1">&#39;Ванные&#39;</span>:<span class="w"> </span>features.bathrooms,
+<span class="w">        </span><span class="s1">&#39;Жилая площадь&#39;</span>:<span class="w"> </span>features.living_area,
+<span class="w">        </span><span class="s1">&#39;Общая площадь&#39;</span>:<span class="w"> </span>features.total_area,
+<span class="w">        </span><span class="s1">&#39;Количество этажей&#39;</span>:<span class="w"> </span>features.floors,
+<span class="w">        </span><span class="s1">&#39;Вид на воду&#39;</span>:<span class="w"> </span>features.waterfront,
+<span class="w">        </span><span class="s1">&#39;Просмотрены ранее&#39;</span>:<span class="w"> </span>features.viewed,
+<span class="w">        </span><span class="s1">&#39;Состояние&#39;</span>:<span class="w"> </span>features.condition,
+<span class="w">        </span><span class="s1">&#39;Оценка риелтора&#39;</span>:<span class="w"> </span>features.grade,
+<span class="w">        </span><span class="s1">&#39;Площадь без подвала&#39;</span>:<span class="w"> </span>features.area_without_basement,
+<span class="w">        </span><span class="s1">&#39;Площадь подвала&#39;</span>:<span class="w"> </span>features.basement_area,
+<span class="w">        </span><span class="s1">&#39;Год постройки&#39;</span>:<span class="w"> </span>features.year_built,
+<span class="w">        </span><span class="s1">&#39;Год реновации&#39;</span>:<span class="w"> </span>features.year_renovated,
+<span class="w">        </span><span class="s1">&#39;Широта&#39;</span>:<span class="w"> </span>features.latitude,
+<span class="w">        </span><span class="s1">&#39;Долгота&#39;</span>:<span class="w"> </span>features.longitude
+<span class="w">    </span><span class="o">}])</span>
+<span class="w">    </span><span class="nv">prediction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>model.predict<span class="o">(</span>input_data<span class="o">)[</span><span class="m">0</span><span class="o">]</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s1">&#39;predicted_price&#39;</span>:<span class="w"> </span>prediction
+<span class="w">    </span><span class="o">}</span>
+</code></pre></div>
+<p>В случае <strong>Flask</strong> логика будет похожей: пользователь отправляет данные через HTML-форму или POST-запрос, сервер преобразует их в таблицу <code>pandas.DataFrame</code>, передает в модель и возвращает предсказанную цену.</p>
+<p>В случае <strong>Django</strong> модель можно подключить во <code>view</code>-функции или <code>class-based view</code>. Пользователь заполняет форму, данные проходят валидацию, после чего передаются в ML-модель. Результат можно отобразить на HTML-странице.</p>
+<details class="info">
+<summary>Пояснение</summary>
+<p>Важно, чтобы признаки, которые приходят в веб-приложение, имели тот же порядок, те же названия и тот же формат, что и признаки, использованные при обучении модели.
+Если при обучении выполнялась дополнительная предобработка данных, ее также нужно сохранить и использовать в веб-приложении.</p>
+</details>
 <h2 id="_4">Выводы</h2>
+<p>В ходе выполнения лабораторной работы была изучена задача регрессии на примере предсказания стоимости недвижимости.</p>
+<p>Были выполнены основные этапы работы с ML-моделью:</p>
+<ul>
+<li>загрузка данных</li>
+<li>анализ структуры данных</li>
+<li>разделение данных на признаки и целевую переменную</li>
+<li>обучение моделей регрессии</li>
+<li>получение предсказаний на тестовой выборке</li>
+<li>оценка качества моделей с помощью MAE, MSE и RMSE</li>
+<li>анализ важности признаков</li>
+<li>настройка параметров модели</li>
+<li>сравнение нескольких алгоритмов машинного обучения</li>
+</ul>
+<p>Базовая модель линейной регрессии показала худший результат среди основных моделей: ее RMSE составило 201883.24.</p>
+<p>Модель случайного леса справилась с задачей значительно лучше: базовый <code>RandomForestRegressor</code> показал RMSE = 135516.61.</p>
+<p>После настройки параметров случайного леса удалось немного улучшить результат. Лучший вариант <code>RandomForestRegressor</code> имел параметры <code>n_estimators</code> = 200, <code>max_depth</code> = 20, <code>min_samples_leaf</code> = 3 и показал RMSE = 134631.32.</p>
+<p>Наилучший результат среди всех рассмотренных моделей показала модель <code>HistGradientBoostingRegressor</code>. Ее значение RMSE составило 122351.79, что примерно на 9.72% лучше результата базового случайного леса.</p>
+<p>Также была рассмотрена возможность интеграции обученной модели в веб-приложение. Был описан общий алгоритм интеграции модели с <strong>Flask</strong>, <strong>Django</strong> или <strong>FastAPI</strong>.</p>
+<p>Ссылка на доску Colab:</p>
+<p><a href="https://colab.research.google.com/drive/1upkKMsBf1mXHOtvPoaw_OiF2IqYyd6hT?usp=sharing">Доска Colab</a></p>
 
 
 

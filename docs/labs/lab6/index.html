@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#6" class="md-skip">
+        <a href="#6-pandas" class="md-skip">
           Перейти к содержанию
         </a>
       
@@ -642,6 +642,111 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ход работы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Описание набора данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Первичный анализ данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Визуализация пропусков
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Обработка пропусков
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Трансформация данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Обработка выбросов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Агрегация и анализ данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Метрики качества очистки данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Сохранение очищенного набора данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -747,11 +852,1524 @@
   
 
 
-<h1 id="6">Лабораторная работа 6: <em>название</em></h1>
+<h1 id="6-pandas">Лабораторная работа 6: <em>Очистка и трансформация данных. pandas</em></h1>
 <h2 id="_1">Цели</h2>
+<ol>
+<li>Освоить основные методы очистки данных с использованием библиотеки <strong>pandas</strong>.</li>
+<li>Изучить способы обработки пропущенных значений, выбросов и категориальных признаков.</li>
+<li>Научиться выполнять трансформацию данных и создавать новые признаки на основе существующих.</li>
+<li>Провести первичный анализ реального набора данных и подготовить его к дальнейшему использованию.</li>
+</ol>
 <h2 id="_2">Задачи</h2>
+<p>В рамках лабораторной работы требовалось:</p>
+<ul>
+<li>загрузить данные из CSV-файла</li>
+<li>выполнить первичный анализ датафрейма</li>
+<li>определить типы данных и количество пропусков</li>
+<li>получить статистические характеристики числовых и категориальных признаков</li>
+<li>построить визуализации распределений и пропущенных значений</li>
+<li>обработать пропуски в столбцах <code>Age</code>, <code>Embarked</code> и <code>Cabin</code></li>
+<li>преобразовать типы данных и создать новые признаки</li>
+<li>выявить выбросы с помощью IQR-метода</li>
+<li>применить winsorization для обработки экстремальных значений</li>
+<li>выполнить агрегацию данных и построить сводные таблицы</li>
+<li>вычислить метрики качества очистки данных</li>
+<li>сохранить очищенный датафрейм в новый CSV-файл</li>
+</ul>
 <h2 id="_3">Ход работы</h2>
+<h3 id="1">1. Описание набора данных</h3>
+<p>В качестве исходных данных использовался датасет <strong>Titanic</strong> с платформы Kaggle. Набор данных содержит информацию о пассажирах корабля Titanic и используется для анализа факторов, связанных с выживаемостью пассажиров.</p>
+<p>В работе использовался файл <code>train.csv</code>, так как он содержит целевой признак <code>Survived</code>, показывающий, выжил пассажир или нет.</p>
+<p>Структура данных:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PassengerId</code></td>
+<td>идентификатор пассажира</td>
+</tr>
+<tr>
+<td><code>Survived</code></td>
+<td>факт выживания: <code>0</code> — не выжил, <code>1</code> — выжил</td>
+</tr>
+<tr>
+<td><code>Pclass</code></td>
+<td>класс билета</td>
+</tr>
+<tr>
+<td><code>Name</code></td>
+<td>имя пассажира</td>
+</tr>
+<tr>
+<td><code>Sex</code></td>
+<td>пол пассажира</td>
+</tr>
+<tr>
+<td><code>Age</code></td>
+<td>возраст пассажира</td>
+</tr>
+<tr>
+<td><code>SibSp</code></td>
+<td>количество братьев, сестер или супругов на борту</td>
+</tr>
+<tr>
+<td><code>Parch</code></td>
+<td>количество родителей или детей на борту</td>
+</tr>
+<tr>
+<td><code>Ticket</code></td>
+<td>номер билета</td>
+</tr>
+<tr>
+<td><code>Fare</code></td>
+<td>стоимость билета</td>
+</tr>
+<tr>
+<td><code>Cabin</code></td>
+<td>номер каюты</td>
+</tr>
+<tr>
+<td><code>Embarked</code></td>
+<td>порт посадки</td>
+</tr>
+</tbody>
+</table>
+<p>Для загрузки данных использовалась библиотека <code>pandas</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.read_csv<span class="o">(</span><span class="s2">&quot;train.csv&quot;</span><span class="o">)</span>
+</code></pre></div>
+<p>После загрузки были выведены первые 10 строк датафрейма:</p>
+<div class="highlight"><pre><span></span><code>df.head<span class="o">(</span><span class="m">10</span><span class="o">)</span>
+</code></pre></div>
+<p>Исходный датафрейм содержит 891 строку и 12 столбцов:</p>
+<div class="highlight"><pre><span></span><code>df.shape
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Количество строк</th>
+<th style="text-align: right;">Количество столбцов</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2">2. Первичный анализ данных</h3>
+<p>На первом этапе была выполнена проверка структуры датафрейма с помощью метода <code>info()</code>:</p>
+<div class="highlight"><pre><span></span><code>df.info<span class="o">()</span>
+</code></pre></div>
+<p>В результате были получены следующие типы данных:</p>
+<table>
+<thead>
+<tr>
+<th>Столбец</th>
+<th>Тип данных</th>
+<th style="text-align: right;">Количество непустых значений</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PassengerId</code></td>
+<td><code>int64</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Survived</code></td>
+<td><code>int64</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Pclass</code></td>
+<td><code>int64</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Name</code></td>
+<td><code>object</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Sex</code></td>
+<td><code>object</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Age</code></td>
+<td><code>float64</code></td>
+<td style="text-align: right;">714</td>
+</tr>
+<tr>
+<td><code>SibSp</code></td>
+<td><code>int64</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Parch</code></td>
+<td><code>int64</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Ticket</code></td>
+<td><code>object</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Fare</code></td>
+<td><code>float64</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Cabin</code></td>
+<td><code>object</code></td>
+<td style="text-align: right;">204</td>
+</tr>
+<tr>
+<td><code>Embarked</code></td>
+<td><code>object</code></td>
+<td style="text-align: right;">889</td>
+</tr>
+</tbody>
+</table>
+<p>По результатам анализа видно, что в некоторых признаках есть пропущенные значения. Для более точной оценки была построена таблица пропусков:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">missing_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.DataFrame<span class="o">({</span>
+<span class="w">    </span><span class="s2">&quot;missing_count&quot;</span>:<span class="w"> </span>df.isnull<span class="o">()</span>.sum<span class="o">()</span>,
+<span class="w">    </span><span class="s2">&quot;missing_percent&quot;</span>:<span class="w"> </span>df.isnull<span class="o">()</span>.mean<span class="o">()</span><span class="w"> </span>*<span class="w"> </span><span class="m">100</span>
+<span class="o">})</span>
+missing_table.sort_values<span class="o">(</span><span class="nv">by</span><span class="o">=</span><span class="s2">&quot;missing_count&quot;</span>,<span class="w"> </span><span class="nv">ascending</span><span class="o">=</span>False<span class="o">)</span>
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Столбец</th>
+<th style="text-align: right;">Количество пропусков</th>
+<th style="text-align: right;">Процент пропусков</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Cabin</code></td>
+<td style="text-align: right;">687</td>
+<td style="text-align: right;">77.10%</td>
+</tr>
+<tr>
+<td><code>Age</code></td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">19.87%</td>
+</tr>
+<tr>
+<td><code>Embarked</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.22%</td>
+</tr>
+<tr>
+<td><code>PassengerId</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Name</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Pclass</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Survived</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Sex</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Parch</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>SibSp</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Fare</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td><code>Ticket</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+</tbody>
+</table>
+<p>Наибольшее количество пропусков было обнаружено в столбце <code>Cabin</code>. Также значительное количество пропусков есть в признаке <code>Age</code>. В столбце <code>Embarked</code> отсутствуют только 2 значения.</p>
+<p>Для числовых признаков были рассчитаны статистические характеристики:</p>
+<div class="highlight"><pre><span></span><code>df.describe<span class="o">()</span>
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;">count</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">std</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">25%</th>
+<th style="text-align: right;">50%</th>
+<th style="text-align: right;">75%</th>
+<th style="text-align: right;">max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PassengerId</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">446.00</td>
+<td style="text-align: right;">257.35</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">223.50</td>
+<td style="text-align: right;">446.00</td>
+<td style="text-align: right;">668.50</td>
+<td style="text-align: right;">891.00</td>
+</tr>
+<tr>
+<td><code>Survived</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td><code>Pclass</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">2.31</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">3.00</td>
+</tr>
+<tr>
+<td><code>Age</code></td>
+<td style="text-align: right;">714</td>
+<td style="text-align: right;">29.70</td>
+<td style="text-align: right;">14.53</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">20.13</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">38.00</td>
+<td style="text-align: right;">80.00</td>
+</tr>
+<tr>
+<td><code>SibSp</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">8.00</td>
+</tr>
+<tr>
+<td><code>Parch</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">6.00</td>
+</tr>
+<tr>
+<td><code>Fare</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">32.20</td>
+<td style="text-align: right;">49.69</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">7.91</td>
+<td style="text-align: right;">14.45</td>
+<td style="text-align: right;">31.00</td>
+<td style="text-align: right;">512.33</td>
+</tr>
+</tbody>
+</table>
+<p>Также были рассчитаны характеристики категориальных признаков:</p>
+<div class="highlight"><pre><span></span><code>df.describe<span class="o">(</span><span class="nv">include</span><span class="o">=</span><span class="s2">&quot;object&quot;</span><span class="o">)</span>
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;">count</th>
+<th style="text-align: right;">unique</th>
+<th>top</th>
+<th style="text-align: right;">freq</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">891</td>
+<td><code>Dooley, Mr. Patrick</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Sex</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">2</td>
+<td><code>male</code></td>
+<td style="text-align: right;">577</td>
+</tr>
+<tr>
+<td><code>Ticket</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">681</td>
+<td><code>347082</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td><code>Cabin</code></td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">147</td>
+<td><code>G6</code></td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td><code>Embarked</code></td>
+<td style="text-align: right;">889</td>
+<td style="text-align: right;">3</td>
+<td><code>S</code></td>
+<td style="text-align: right;">644</td>
+</tr>
+</tbody>
+</table>
+<p>Для анализа распределения числовых признаков были построены гистограммы:</p>
+<div class="highlight"><pre><span></span><code>df.hist<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">14</span>,<span class="w"> </span><span class="m">10</span><span class="o">)</span>,<span class="w"> </span><span class="nv">bins</span><span class="o">=</span><span class="m">20</span><span class="o">)</span>
+plt.tight_layout<span class="o">()</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Гистограммы" src="../images/lab6/numeric_histograms.png.png" /></p>
+<h3 id="3">3. Визуализация пропусков</h3>
+<p>Для наглядного анализа пропущенных значений была построена тепловая карта. Она позволила увидеть, в каких столбцах и строках чаще всего отсутствуют данные.</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">10</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+sns.heatmap<span class="o">(</span>df.isnull<span class="o">()</span>,<span class="w"> </span><span class="nv">cbar</span><span class="o">=</span>False<span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Визуализация пропусков в данных&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Тепловая карта" src="../../images/lab6/missing_values_heatmap.png" /></p>
+<p>По тепловой карте видно, что основной проблемный столбец — <code>Cabin</code>, так как в нем отсутствует большая часть значений. Также пропуски есть в столбце <code>Age</code>, но их существенно меньше. В столбце <code>Embarked</code> пропущено только 2 значения.</p>
+<h3 id="4">4. Обработка пропусков</h3>
+<p>Для дальнейшей работы была создана копия исходного датафрейма:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">df_clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.copy<span class="o">()</span>
+</code></pre></div>
+<p>Для столбца <code>Age</code> были рассчитаны среднее и медианное значения:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nv">age_mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.mean<span class="o">()</span>
+<span class="nv">age_median</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.median<span class="o">()</span>
+age_mean,<span class="w"> </span>age_median
+</code></pre></div>
+Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Показатель</th>
+<th style="text-align: right;">Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Среднее значение <code>Age</code></td>
+<td style="text-align: right;">29.6991</td>
+</tr>
+<tr>
+<td>Медианное значение <code>Age</code></td>
+<td style="text-align: right;">28.0</td>
+</tr>
+</tbody>
+</table>
+<p>Для заполнения пропусков было выбрано медианное значение:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.fillna<span class="o">(</span>age_median<span class="o">)</span>
+</code></pre></div>
+<p>Медиана была выбрана потому, что она менее чувствительна к выбросам, чем среднее значение.</p>
+<p>После заполнения пропусков был создан новый признак <code>Age_group</code>, разделяющий пассажиров на возрастные группы:</p>
+<div class="highlight"><pre><span></span><code>def<span class="w"> </span>age_group<span class="o">(</span>age<span class="o">)</span>:
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>age<span class="w"> </span>&lt;<span class="w"> </span><span class="m">13</span>:
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Child&quot;</span>
+<span class="w">    </span><span class="k">elif</span><span class="w"> </span>age<span class="w"> </span>&lt;<span class="w"> </span><span class="m">18</span>:
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Teenager&quot;</span>
+<span class="w">    </span><span class="k">elif</span><span class="w"> </span>age<span class="w"> </span>&lt;<span class="w"> </span><span class="m">60</span>:
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Adult&quot;</span>
+<span class="w">    </span><span class="k">else</span>:
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Senior&quot;</span>
+df_clean<span class="o">[</span><span class="s2">&quot;Age_group&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.apply<span class="o">(</span>age_group<span class="o">)</span>
+</code></pre></div>
+<p>Распределение пассажиров по возрастным группам:</p>
+<table>
+<thead>
+<tr>
+<th>Возрастная группа</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Adult</code></td>
+<td style="text-align: right;">752</td>
+</tr>
+<tr>
+<td><code>Child</code></td>
+<td style="text-align: right;">69</td>
+</tr>
+<tr>
+<td><code>Teenager</code></td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr>
+<td><code>Senior</code></td>
+<td style="text-align: right;">26</td>
+</tr>
+</tbody>
+</table>
+<p>Для столбца <code>Embarked</code> была найдена мода, то есть наиболее часто встречающееся значение:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">embarked_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Embarked&quot;</span><span class="o">]</span>.mode<span class="o">()[</span><span class="m">0</span><span class="o">]</span>
+embarked_mode
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th>Мода</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Embarked</code></td>
+<td><code>S</code></td>
+</tr>
+</tbody>
+</table>
+<p>Пропуски были заполнены значением S:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;Embarked&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Embarked&quot;</span><span class="o">]</span>.fillna<span class="o">(</span>embarked_mode<span class="o">)</span>
+</code></pre></div>
+<p>После обработки количество пропусков в столбце Embarked стало равно нулю:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;Embarked&quot;</span><span class="o">]</span>.isnull<span class="o">()</span>.sum<span class="o">()</span>
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Столбец</th>
+<th style="text-align: right;">Количество пропусков после обработки</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Embarked</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Столбец <code>Cabin</code> содержал 687 пропусков, то есть около 77.1% всех строк. Поэтому простое заполнение пропусков модой или другим значением могло бы сильно исказить данные.</p>
+<p>Вместо этого был создан новый признак <code>CabinDeck</code>, содержащий первую букву номера каюты:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;CabinDeck&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Cabin&quot;</span><span class="o">]</span>.str<span class="o">[</span><span class="m">0</span><span class="o">]</span>
+df_clean<span class="o">[</span><span class="s2">&quot;CabinDeck&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;CabinDeck&quot;</span><span class="o">]</span>.fillna<span class="o">(</span><span class="s2">&quot;Unknown&quot;</span><span class="o">)</span>
+</code></pre></div>
+<p>Для пассажиров, у которых каюта не была указана, было использовано значение <code>Unknown</code>. После создания нового признака исходный столбец <code>Cabin</code> был удален:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">df_clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean.drop<span class="o">(</span><span class="nv">columns</span><span class="o">=[</span><span class="s2">&quot;Cabin&quot;</span><span class="o">])</span>
+</code></pre></div>
+<h3 id="5">5. Трансформация данных</h3>
+<p>После обработки пропусков были выполнены преобразования типов данных и созданы новые признаки.</p>
+<p>По ТЗ лабораторной работы признак Pclass нужно было преобразовать из числового формата в категориальный строковый формат:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Исходное значение</th>
+<th>Новое значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>1</code></td>
+<td><code>F</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>2</code></td>
+<td><code>S</code></td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>3</code></td>
+<td><code>T</code></td>
+</tr>
+</tbody>
+</table>
+<p>Для этого использовался словарь соответствий:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">pclass_map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="m">1</span>:<span class="w"> </span><span class="s2">&quot;F&quot;</span>,
+<span class="w">    </span><span class="m">2</span>:<span class="w"> </span><span class="s2">&quot;S&quot;</span>,
+<span class="w">    </span><span class="m">3</span>:<span class="w"> </span><span class="s2">&quot;T&quot;</span>
+<span class="o">}</span>
+df_clean<span class="o">[</span><span class="s2">&quot;Pclass&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Pclass&quot;</span><span class="o">]</span>.map<span class="o">(</span>pclass_map<span class="o">)</span>
+df_clean<span class="o">[</span><span class="s2">&quot;Pclass&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Pclass&quot;</span><span class="o">]</span>.astype<span class="o">(</span><span class="s2">&quot;category&quot;</span><span class="o">)</span>
+</code></pre></div>
+<p>После преобразования признак Pclass стал категориальным.</p>
+<p>Распределение пассажиров по классам после преобразования:</p>
+<table>
+<thead>
+<tr>
+<th>Класс</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>T</code></td>
+<td style="text-align: right;">491</td>
+</tr>
+<tr>
+<td><code>F</code></td>
+<td style="text-align: right;">216</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td style="text-align: right;">184</td>
+</tr>
+</tbody>
+</table>
+<p>Из столбца <code>Name</code> был выделен новый признак <code>Title</code>, отражающий обращение к пассажиру: Mr, Mrs, Miss, Master и другие.</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;Title&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Name&quot;</span><span class="o">]</span>.str.extract<span class="o">(</span>r<span class="s2">&quot;,\s*([^\.]+)\.&quot;</span>,<span class="w"> </span><span class="nv">expand</span><span class="o">=</span>False<span class="o">)</span>
+</code></pre></div>
+<p>Первоначальное распределение обращений:</p>
+<table>
+<thead>
+<tr>
+<th>Обращение</th>
+<th style="text-align: right;">Количество</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Mr</code></td>
+<td style="text-align: right;">517</td>
+</tr>
+<tr>
+<td><code>Miss</code></td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr>
+<td><code>Mrs</code></td>
+<td style="text-align: right;">125</td>
+</tr>
+<tr>
+<td><code>Master</code></td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>Dr</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td><code>Rev</code></td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td><code>Col</code></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>Mlle</code></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>Major</code></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>Ms</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Mme</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Don</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Lady</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Sir</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Capt</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>the Countess</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><code>Jonkheer</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>Так как многие обращения встречались редко, они были объединены в категорию <code>Rare</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">common_titles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;Mr&quot;</span>,<span class="w"> </span><span class="s2">&quot;Miss&quot;</span>,<span class="w"> </span><span class="s2">&quot;Mrs&quot;</span>,<span class="w"> </span><span class="s2">&quot;Master&quot;</span><span class="o">]</span>
+df_clean<span class="o">[</span><span class="s2">&quot;Title&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Title&quot;</span><span class="o">]</span>.apply<span class="o">(</span>
+<span class="w">    </span>lambda<span class="w"> </span>x:<span class="w"> </span>x<span class="w"> </span><span class="k">if</span><span class="w"> </span>x<span class="w"> </span><span class="k">in</span><span class="w"> </span>common_titles<span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;Rare&quot;</span>
+<span class="o">)</span>
+</code></pre></div>
+<p>Распределение после объединения редких значений:</p>
+<table>
+<thead>
+<tr>
+<th>Обращение</th>
+<th style="text-align: right;">Количество</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Mr</code></td>
+<td style="text-align: right;">517</td>
+</tr>
+<tr>
+<td><code>Miss</code></td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr>
+<td><code>Mrs</code></td>
+<td style="text-align: right;">125</td>
+</tr>
+<tr>
+<td><code>Master</code></td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>Rare</code></td>
+<td style="text-align: right;">27</td>
+</tr>
+</tbody>
+</table>
+<p>Для возможности дальнейшего численного анализа признак <code>Sex</code> был преобразован в числовой формат. Был создан новый столбец <code>Sex_encoded</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Исходное значение</th>
+<th style="text-align: right;">Новое значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>male</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>female</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;Sex_encoded&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Sex&quot;</span><span class="o">]</span>.map<span class="o">({</span>
+<span class="w">    </span><span class="s2">&quot;male&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<span class="w">    </span><span class="s2">&quot;female&quot;</span>:<span class="w"> </span><span class="m">1</span>
+<span class="o">})</span>
+</code></pre></div>
+<p>Исходный столбец Sex был сохранен, так как он удобен для группировок и визуализаций.</p>
+<p>На основе признаков <code>SibSp</code> и <code>Parch</code> был создан новый признак <code>FamilySize</code>, показывающий размер семьи пассажира на борту:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;FamilySize&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;SibSp&quot;</span><span class="o">]</span><span class="w"> </span>+<span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Parch&quot;</span><span class="o">]</span><span class="w"> </span>+<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<p>Единица добавляется потому, что нужно учитывать самого пассажира.</p>
+<p>Также был создан бинарный признак <code>IsAlone</code>, показывающий, путешествовал пассажир один или с семьей:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;IsAlone&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>df_clean<span class="o">[</span><span class="s2">&quot;FamilySize&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
+</code></pre></div>
+<p>Распределение значений признака <code>IsAlone</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Значение <code>IsAlone</code></th>
+<th>Описание</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>1</code></td>
+<td>пассажир путешествовал один</td>
+<td style="text-align: right;">537</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>0</code></td>
+<td>пассажир путешествовал с семьей</td>
+<td style="text-align: right;">354</td>
+</tr>
+</tbody>
+</table>
+<p>Пример полученных значений:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>SibSp</code></th>
+<th style="text-align: right;"><code>Parch</code></th>
+<th style="text-align: right;"><code>FamilySize</code></th>
+<th style="text-align: right;"><code>IsAlone</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6">6. Обработка выбросов</h3>
+<p>После обработки пропусков и создания новых признаков была выполнена проверка данных на наличие выбросов. В первую очередь рассматривался признак <code>Fare</code>, так как стоимость билета может сильно отличаться у пассажиров разных классов.</p>
+<p>Для визуальной оценки выбросов был построен <code>boxplot</code>:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+sns.boxplot<span class="o">(</span><span class="nv">x</span><span class="o">=</span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">])</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Boxplot для признака Fare&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Fare&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="График" src="../../images/lab6/fare_boxplot.png" /></p>
+<p>По графику видно, что у признака <code>Fare</code> есть заметные выбросы: большая часть значений сосредоточена в нижнем диапазоне, но встречаются отдельные очень дорогие билеты.</p>
+<p>Для формального определения выбросов был использован IQR-метод. Межквартильный размах рассчитывается как разница между третьим и первым квартилями:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">q1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">]</span>.quantile<span class="o">(</span><span class="m">0</span>.25<span class="o">)</span>
+<span class="nv">q3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">]</span>.quantile<span class="o">(</span><span class="m">0</span>.75<span class="o">)</span>
+<span class="nv">iqr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>q3<span class="w"> </span>-<span class="w"> </span>q1
+<span class="nv">lower_bound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>q1<span class="w"> </span>-<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>*<span class="w"> </span>iqr
+<span class="nv">upper_bound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>q3<span class="w"> </span>+<span class="w"> </span><span class="m">1</span>.5<span class="w"> </span>*<span class="w"> </span>iqr
+q1,<span class="w"> </span>q3,<span class="w"> </span>iqr,<span class="w"> </span>lower_bound,<span class="w"> </span>upper_bound
+</code></pre></div>
+<p>Результат вычислений:</p>
+<table>
+<thead>
+<tr>
+<th>Показатель</th>
+<th style="text-align: right;">Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Первый квартиль <code>Q1</code></td>
+<td style="text-align: right;">7.9104</td>
+</tr>
+<tr>
+<td>Третий квартиль <code>Q3</code></td>
+<td style="text-align: right;">31.0000</td>
+</tr>
+<tr>
+<td>Межквартильный размах <code>IQR</code></td>
+<td style="text-align: right;">23.0896</td>
+</tr>
+<tr>
+<td>Нижняя граница выбросов</td>
+<td style="text-align: right;">-26.7240</td>
+</tr>
+<tr>
+<td>Верхняя граница выбросов</td>
+<td style="text-align: right;">65.6344</td>
+</tr>
+</tbody>
+</table>
+<p>После этого были отобраны строки, где значение <code>Fare</code> выходит за рассчитанные границы:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">fare_outliers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span>
+<span class="w">    </span><span class="o">(</span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">]</span><span class="w"> </span>&lt;<span class="w"> </span>lower_bound<span class="o">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>
+<span class="w">    </span><span class="o">(</span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">]</span><span class="w"> </span>&gt;<span class="w"> </span>upper_bound<span class="o">)</span>
+<span class="o">]</span>
+fare_outliers.shape<span class="o">[</span><span class="m">0</span><span class="o">]</span>
+</code></pre></div>
+<p>Количество найденных выбросов:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;">Количество выбросов</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Fare</code></td>
+<td style="text-align: right;">116</td>
+</tr>
+</tbody>
+</table>
+<p>Так как нижняя граница получилась отрицательной, а стоимость билета не может быть меньше нуля, фактически выбросы находятся только выше верхней границы.</p>
+<p>Дополнительно было построено распределение признака <code>Age</code>:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+sns.histplot<span class="o">(</span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>,<span class="w"> </span><span class="nv">bins</span><span class="o">=</span><span class="m">30</span>,<span class="w"> </span><span class="nv">kde</span><span class="o">=</span>True<span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Распределение признака Age&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Age&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Count&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p>После заполнения пропусков медианой распределение возраста стало более плотным около значения 28 лет. Это связано с тем, что пропущенные значения были заменены медианным возрастом.</p>
+<p>Для уменьшения влияния экстремальных значений была применена <code>winsorization</code>. В рамках этой обработки значения выше 95-го перцентиля заменяются на значение 95-го перцентиля.</p>
+<p>Для признака Fare был рассчитан 95-й перцентиль:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">fare_95</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">]</span>.quantile<span class="o">(</span><span class="m">0</span>.95<span class="o">)</span>
+fare_95
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;">95-й перцентиль</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Fare</code></td>
+<td style="text-align: right;">112.07915</td>
+</tr>
+</tbody>
+</table>
+<p>После этого был создан новый признак <code>Fare_winsorized</code>, где слишком большие значения стоимости билета были ограничены сверху:</p>
+<div class="highlight"><pre><span></span><code>df_clean<span class="o">[</span><span class="s2">&quot;Fare_winsorized&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Fare&quot;</span><span class="o">]</span>.clip<span class="o">(</span><span class="nv">upper</span><span class="o">=</span>fare_95<span class="o">)</span>
+</code></pre></div>
+<p>Для сравнения исходного и обработанного признака была рассчитана описательная статистика:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;">count</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">std</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">25%</th>
+<th style="text-align: right;">50%</th>
+<th style="text-align: right;">75%</th>
+<th style="text-align: right;">max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Fare</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">32.2042</td>
+<td style="text-align: right;">49.6934</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">7.9104</td>
+<td style="text-align: right;">14.4542</td>
+<td style="text-align: right;">31.0000</td>
+<td style="text-align: right;">512.3292</td>
+</tr>
+<tr>
+<td><code>Fare_winsorized</code></td>
+<td style="text-align: right;">891</td>
+<td style="text-align: right;">27.7208</td>
+<td style="text-align: right;">29.7583</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">7.9104</td>
+<td style="text-align: right;">14.4542</td>
+<td style="text-align: right;">31.0000</td>
+<td style="text-align: right;">112.0792</td>
+</tr>
+</tbody>
+</table>
+<p>После <code>winsorization</code> максимальное значение признака уменьшилось с 512.3292 до 112.0792.</p>
+<p>Дополнительно аналогичная обработка была выполнена для признака <code>Age</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">age_95</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.quantile<span class="o">(</span><span class="m">0</span>.95<span class="o">)</span>
+df_clean<span class="o">[</span><span class="s2">&quot;Age_winsorized&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.clip<span class="o">(</span><span class="nv">upper</span><span class="o">=</span>age_95<span class="o">)</span>
+</code></pre></div>
+<h3 id="7">7. Агрегация и анализ данных</h3>
+<p>После очистки и трансформации данных были рассчитаны агрегированные показатели, позволяющие проанализировать связь признаков с выживаемостью пассажиров.</p>
+<p>Сначала была рассчитана средняя выживаемость по классам билета:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">survival_by_class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean.groupby<span class="o">(</span><span class="s2">&quot;Pclass&quot;</span><span class="o">)[</span><span class="s2">&quot;Survived&quot;</span><span class="o">]</span>.mean<span class="o">()</span>
+<span class="nv">survival_by_class_percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>survival_by_class<span class="w"> </span>*<span class="w"> </span><span class="m">100</span>
+survival_by_class_percent
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Класс</th>
+<th style="text-align: right;">Средняя выживаемость</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>F</code></td>
+<td style="text-align: right;">62.96%</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td style="text-align: right;">47.28%</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td style="text-align: right;">24.24%</td>
+</tr>
+</tbody>
+</table>
+<p>Для наглядного сравнения был построен столбчатый график:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">7</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+sns.barplot<span class="o">(</span>
+<span class="w">    </span><span class="nv">x</span><span class="o">=</span>survival_by_class_percent.index,
+<span class="w">    </span><span class="nv">y</span><span class="o">=</span>survival_by_class_percent.values
+<span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Средняя выживаемость по классам&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Класс&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Выживаемость, %&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="График" src="../../images/lab6/age_distribution.png" /></p>
+<p>По результатам видно, что пассажиры первого класса имели самый высокий процент выживаемости — около 62.96%. У пассажиров третьего класса выживаемость была самой низкой — около 24.24%. Это показывает, что класс билета был связан с шансами на выживание.</p>
+<p>Далее была выполнена группировка по признакам <code>Pclass</code> и <code>Sex</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">survival_by_class_sex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean.groupby<span class="o">([</span><span class="s2">&quot;Pclass&quot;</span>,<span class="w"> </span><span class="s2">&quot;Sex&quot;</span><span class="o">])[</span><span class="s2">&quot;Survived&quot;</span><span class="o">]</span>.mean<span class="o">()</span>
+<span class="nv">survival_by_class_sex_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>survival_by_class_sex.unstack<span class="o">()</span>
+survival_by_class_sex_table
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Класс</th>
+<th style="text-align: right;"><code>female</code></th>
+<th style="text-align: right;"><code>male</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>F</code></td>
+<td style="text-align: right;">0.9681</td>
+<td style="text-align: right;">0.3689</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td style="text-align: right;">0.9211</td>
+<td style="text-align: right;">0.1574</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td style="text-align: right;">0.5000</td>
+<td style="text-align: right;">0.1354</td>
+</tr>
+</tbody>
+</table>
+<p>Для визуализации результата был построен столбчатый график:</p>
+<div class="highlight"><pre><span></span><code>survival_by_class_sex_table.plot<span class="o">(</span><span class="nv">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span>,<span class="w"> </span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Выживаемость по классу и полу&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Класс&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Средняя выживаемость&quot;</span><span class="o">)</span>
+plt.xticks<span class="o">(</span><span class="nv">rotation</span><span class="o">=</span><span class="m">0</span><span class="o">)</span>
+plt.legend<span class="o">(</span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Пол&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="График" src="../../images/lab6/survival_by_class_sex.png" /></p>
+<p>Группировка показала, что женщины выживали чаще мужчин во всех классах. Особенно высокая выживаемость наблюдалась у женщин первого и второго класса: более 90%. Среди мужчин значения значительно ниже, особенно во втором и третьем классах.</p>
+<p>Также был рассчитан медианный возраст пассажиров в зависимости от порта посадки:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">median_age_by_embarked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean.groupby<span class="o">(</span><span class="s2">&quot;Embarked&quot;</span><span class="o">)[</span><span class="s2">&quot;Age&quot;</span><span class="o">]</span>.median<span class="o">()</span>
+median_age_by_embarked
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Порт посадки</th>
+<th style="text-align: right;">Медианный возраст</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C</code></td>
+<td style="text-align: right;">28.0</td>
+</tr>
+<tr>
+<td><code>Q</code></td>
+<td style="text-align: right;">28.0</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td style="text-align: right;">28.0</td>
+</tr>
+</tbody>
+</table>
+<p>После заполнения пропусков медианой медианный возраст по всем портам посадки оказался одинаковым и равным 28 годам.</p>
+<p>Для анализа связи новых признаков с выживаемостью была построена сводная таблица по признакам <code>Age_group</code> и <code>IsAlone</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">survival_pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.pivot_table<span class="o">(</span>
+<span class="w">    </span>df_clean,
+<span class="w">    </span><span class="nv">values</span><span class="o">=</span><span class="s2">&quot;Survived&quot;</span>,
+<span class="w">    </span><span class="nv">index</span><span class="o">=</span><span class="s2">&quot;Age_group&quot;</span>,
+<span class="w">    </span><span class="nv">columns</span><span class="o">=</span><span class="s2">&quot;IsAlone&quot;</span>,
+<span class="w">    </span><span class="nv">aggfunc</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+<span class="o">)</span>
+<span class="nv">survival_pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>survival_pivot.rename<span class="o">(</span><span class="nv">columns</span><span class="o">={</span>
+<span class="w">    </span><span class="m">0</span>:<span class="w"> </span><span class="s2">&quot;With family&quot;</span>,
+<span class="w">    </span><span class="m">1</span>:<span class="w"> </span><span class="s2">&quot;Alone&quot;</span>
+<span class="o">})</span>
+survival_pivot
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Возрастная группа</th>
+<th style="text-align: right;">With family</th>
+<th style="text-align: right;">Alone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Adult</code></td>
+<td style="text-align: right;">0.4864</td>
+<td style="text-align: right;">0.3010</td>
+</tr>
+<tr>
+<td><code>Child</code></td>
+<td style="text-align: right;">0.5319</td>
+<td style="text-align: right;">0.4706</td>
+</tr>
+<tr>
+<td><code>Senior</code></td>
+<td style="text-align: right;">0.3333</td>
+<td style="text-align: right;">0.0869</td>
+</tr>
+<tr>
+<td><code>Teenager</code></td>
+<td style="text-align: right;">0.5000</td>
+<td style="text-align: right;">0.3333</td>
+</tr>
+</tbody>
+</table>
+<p>По таблице видно, что в большинстве возрастных групп пассажиры, путешествовавшие с семьей, имели более высокую выживаемость, чем пассажиры, путешествовавшие в одиночку. Особенно заметна разница среди взрослых и пожилых пассажиров.</p>
+<p>Дополнительно была построена сводная таблица выживаемости по обращениям пассажиров и классам билета:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">title_pclass_pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.pivot_table<span class="o">(</span>
+<span class="w">    </span>df_clean,
+<span class="w">    </span><span class="nv">values</span><span class="o">=</span><span class="s2">&quot;Survived&quot;</span>,
+<span class="w">    </span><span class="nv">index</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span>,
+<span class="w">    </span><span class="nv">columns</span><span class="o">=</span><span class="s2">&quot;Pclass&quot;</span>,
+<span class="w">    </span><span class="nv">aggfunc</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>
+<span class="o">)</span>
+title_pclass_pivot
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th style="text-align: right;"><code>F</code></th>
+<th style="text-align: right;"><code>S</code></th>
+<th style="text-align: right;"><code>T</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Master</code></td>
+<td style="text-align: right;">1.0000</td>
+<td style="text-align: right;">1.0000</td>
+<td style="text-align: right;">0.3929</td>
+</tr>
+<tr>
+<td><code>Miss</code></td>
+<td style="text-align: right;">0.9565</td>
+<td style="text-align: right;">0.9412</td>
+<td style="text-align: right;">0.5000</td>
+</tr>
+<tr>
+<td><code>Mr</code></td>
+<td style="text-align: right;">0.3458</td>
+<td style="text-align: right;">0.0879</td>
+<td style="text-align: right;">0.1129</td>
+</tr>
+<tr>
+<td><code>Mrs</code></td>
+<td style="text-align: right;">0.9767</td>
+<td style="text-align: right;">0.9024</td>
+<td style="text-align: right;">0.5000</td>
+</tr>
+<tr>
+<td><code>Rare</code></td>
+<td style="text-align: right;">0.5333</td>
+<td style="text-align: right;">0.2857</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+</tbody>
+</table>
+<p>Эта таблица показывает, что обращение пассажира также связано с выживаемостью. Самые высокие показатели наблюдаются у категорий Mrs, Miss и Master, особенно в первом и втором классах. Самые низкие значения характерны для категории Mr.</p>
+<h3 id="8">8. Метрики качества очистки данных</h3>
+<p>После выполнения очистки были рассчитаны метрики, позволяющие оценить результат обработки данных.</p>
+<p>Для оценки качества обработки пропусков было посчитано общее количество пропущенных значений до и после очистки:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">total_missing_before</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.isnull<span class="o">()</span>.sum<span class="o">()</span>.sum<span class="o">()</span>
+<span class="nv">total_missing_after</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean.isnull<span class="o">()</span>.sum<span class="o">()</span>.sum<span class="o">()</span>
+<span class="nv">missing_fill_percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>
+<span class="w">    </span><span class="o">(</span>total_missing_before<span class="w"> </span>-<span class="w"> </span>total_missing_after<span class="o">)</span><span class="w"> </span>/<span class="w"> </span>total_missing_before
+<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="m">100</span>
+missing_fill_percent
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Метрика</th>
+<th style="text-align: right;">Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Количество пропусков до обработки</td>
+<td style="text-align: right;">866</td>
+</tr>
+<tr>
+<td>Количество пропусков после обработки</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Доля устраненных пропусков</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+</tbody>
+</table>
+<p>После обработки в итоговом датафрейме не осталось пропущенных значений. Пропуски в <code>Age</code> и <code>Embarked</code> были заполнены, а для <code>Cabin</code> был создан новый признак <code>CabinDeck</code>, после чего исходный столбец был удален.</p>
+<p>Также было рассчитано количество уникальных значений в категориальных признаках:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">categorical_columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean.select_dtypes<span class="o">(</span><span class="nv">include</span><span class="o">=[</span><span class="s2">&quot;object&quot;</span>,<span class="w"> </span><span class="s2">&quot;category&quot;</span><span class="o">])</span>.columns
+<span class="nv">unique_values_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span>categorical_columns<span class="o">]</span>.nunique<span class="o">()</span>
+unique_values_count
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;">Количество уникальных значений</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Pclass</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td><code>Name</code></td>
+<td style="text-align: right;">891</td>
+</tr>
+<tr>
+<td><code>Sex</code></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>Ticket</code></td>
+<td style="text-align: right;">681</td>
+</tr>
+<tr>
+<td><code>Embarked</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td><code>Age_group</code></td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td><code>CabinDeck</code></td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr>
+<td><code>Title</code></td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<p>Наибольшее количество уникальных значений осталось у признаков <code>Name</code> и <code>Ticket</code>, так как они почти индивидуальны для каждого пассажира. Новые признаки <code>Age_group</code>, <code>CabinDeck</code> и <code>Title</code> имеют ограниченное количество категорий и удобны для дальнейшего анализа.</p>
+<p>После создания новых признаков были проверены их распределения.</p>
+<p>Распределение признака <code>Age_group</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Возрастная группа</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Adult</code></td>
+<td style="text-align: right;">752</td>
+</tr>
+<tr>
+<td><code>Child</code></td>
+<td style="text-align: right;">69</td>
+</tr>
+<tr>
+<td><code>Teenager</code></td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr>
+<td><code>Senior</code></td>
+<td style="text-align: right;">26</td>
+</tr>
+</tbody>
+</table>
+<p>Распределение признака <code>Title</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Mr</code></td>
+<td style="text-align: right;">517</td>
+</tr>
+<tr>
+<td><code>Miss</code></td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr>
+<td><code>Mrs</code></td>
+<td style="text-align: right;">125</td>
+</tr>
+<tr>
+<td><code>Master</code></td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><code>Rare</code></td>
+<td style="text-align: right;">27</td>
+</tr>
+</tbody>
+</table>
+<p>Распределение признака <code>IsAlone</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">IsAlone</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">537</td>
+</tr>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">354</td>
+</tr>
+</tbody>
+</table>
+<p>Распределение признака <code>Pclass</code> после преобразования:</p>
+<table>
+<thead>
+<tr>
+<th>Pclass</th>
+<th style="text-align: right;">Количество пассажиров</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>T</code></td>
+<td style="text-align: right;">491</td>
+</tr>
+<tr>
+<td><code>F</code></td>
+<td style="text-align: right;">216</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td style="text-align: right;">184</td>
+</tr>
+</tbody>
+</table>
+<p>Для числовых признаков была рассчитана корреляционная матрица:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">new_numeric_features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="s2">&quot;Survived&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;Sex_encoded&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;FamilySize&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;IsAlone&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;Fare_winsorized&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;Age&quot;</span>
+<span class="o">]</span>
+<span class="nv">correlation_matrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df_clean<span class="o">[</span>new_numeric_features<span class="o">]</span>.corr<span class="o">()</span>
+correlation_matrix
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th style="text-align: right;"><code>Survived</code></th>
+<th style="text-align: right;"><code>Sex_encoded</code></th>
+<th style="text-align: right;"><code>FamilySize</code></th>
+<th style="text-align: right;"><code>IsAlone</code></th>
+<th style="text-align: right;"><code>Fare_winsorized</code></th>
+<th style="text-align: right;"><code>Age</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Survived</code></td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">-0.20</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">-0.06</td>
+</tr>
+<tr>
+<td><code>Sex_encoded</code></td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">-0.30</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">-0.08</td>
+</tr>
+<tr>
+<td><code>FamilySize</code></td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">-0.69</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">-0.25</td>
+</tr>
+<tr>
+<td><code>IsAlone</code></td>
+<td style="text-align: right;">-0.20</td>
+<td style="text-align: right;">-0.30</td>
+<td style="text-align: right;">-0.69</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">-0.46</td>
+<td style="text-align: right;">0.17</td>
+</tr>
+<tr>
+<td><code>Fare_winsorized</code></td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">-0.46</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+<tr>
+<td><code>Age</code></td>
+<td style="text-align: right;">-0.06</td>
+<td style="text-align: right;">-0.08</td>
+<td style="text-align: right;">-0.25</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>Для наглядности была построена тепловая карта корреляций:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">6</span><span class="o">))</span>
+sns.heatmap<span class="o">(</span>correlation_matrix,<span class="w"> </span><span class="nv">annot</span><span class="o">=</span>True,<span class="w"> </span><span class="nv">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span>,<span class="w"> </span><span class="nv">fmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Корреляция между числовыми и новыми признаками&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Тепловая карта" src="../../images/lab6/correlation_matrix.png" /></p>
+<p>Корреляционный анализ показал, что наиболее заметная положительная связь с выживаемостью наблюдается у признака <code>Sex_encoded</code> — около 0.54. Это означает, что пол пассажира был важным фактором, связанным с выживаемостью. Также положительная связь наблюдается у признака <code>Fare_winsorized</code> — около 0.31. Признак <code>IsAlone</code> имеет отрицательную корреляцию с выживаемостью — около -0.20, что может говорить о том, что одиночные пассажиры в среднем выживали реже.</p>
+<h3 id="9">9. Сохранение очищенного набора данных</h3>
+<p>После выполнения всех этапов очистки и трансформации итоговый датафрейм был сохранен в новый CSV-файл:</p>
+<div class="highlight"><pre><span></span><code>df_clean.to_csv<span class="o">(</span><span class="s2">&quot;titanic_cleaned.csv&quot;</span>,<span class="w"> </span><span class="nv">index</span><span class="o">=</span>False<span class="o">)</span>
+</code></pre></div>
+<p>Полученный файл <code>titanic_cleaned.csv</code> содержит обработанные данные без пропусков, а также новые признаки, созданные в ходе работы.</p>
 <h2 id="_4">Выводы</h2>
+<p>В ходе выполнения лабораторной работы были изучены методы очистки и трансформации данных с использованием библиотеки <code>pandas</code>.</p>
+<p>На практике были выполнены основные этапы подготовки данных:</p>
+<ul>
+<li>загрузка и первичный анализ датафрейма</li>
+<li>определение типов данных и пропущенных значений</li>
+<li>визуализация распределений и пропусков</li>
+<li>заполнение пропусков в признаках <code>Age</code> и <code>Embarked</code></li>
+<li>создание нового признака CabinDeck на основе столбца <code>Cabin</code></li>
+<li>преобразование категориальных и числовых признаков</li>
+<li>создание новых признаков <code>Age_group</code>, <code>Title</code>, <code>Sex_encoded</code>, <code>FamilySize</code> и <code>IsAlone</code></li>
+<li>выявление выбросов в признаке <code>Fare</code> с помощью IQR-метода</li>
+<li>обработка экстремальных значений с помощью <code>winsorization</code></li>
+<li>расчет агрегированных показателей и корреляций</li>
+<li>сохранение очищенного датафрейма в CSV-файл</li>
+</ul>
+<p>В результате работы был получен подготовленный набор данных <code>titanic_cleaned.csv</code>, который можно использовать для дальнейшего анализа или построения моделей машинного обучения. После обработки в датафрейме не осталось пропущенных значений, а новые признаки позволили лучше описать структуру данных и выявить связи между характеристиками пассажиров и выживаемостью.</p>
+<p>Ссылка на доску Colab:</p>
+<p><a href="https://colab.research.google.com/drive/1fIB3OTG2cL5P1WksZZNgL11kLgIQlKXj?usp=sharing">Доска Colab</a></p>
 
 
 

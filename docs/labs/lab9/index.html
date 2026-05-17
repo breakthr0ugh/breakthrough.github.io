@@ -754,6 +754,133 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ход работы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Загрузка и первичный просмотр данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Проверка пропусков и подготовка столбцов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Создание новых признаков
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Описательная статистика и типы признаков
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Группировка данных и сравнение средних баллов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Визуализация распределения баллов по математике
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Влияние подготовительного курса на средний балл
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Сравнение средних баллов по полу
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Связь между баллами по математике и чтению
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Дополнительная визуализация по уровню образования родителей
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-sourcecraft-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Автоматическое выполнение ноутбука в SourceCraft CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -833,9 +960,657 @@
 
 <h1 id="9-sourcecraft-cicd">Лабораторная работа 9: <em>Работа с графикой. Sourcecraft. CI/CD. Артефакты</em></h1>
 <h2 id="_1">Цели</h2>
+<ol>
+<li>Освоить базовые приемы анализа табличных данных с использованием <code>pandas</code>.</li>
+<li>Научиться выполнять первичную обработку датасета: загрузку, проверку структуры, поиск пропусков и переименование столбцов.</li>
+<li>Создать новые признаки на основе исходных данных.</li>
+<li>Выполнить группировку и агрегацию данных для поиска закономерностей.</li>
+<li>Построить визуализации с помощью <code>matplotlib</code>.</li>
+<li>Настроить CI в <strong>SourceCraft</strong> для автоматического выполнения ноутбука и генерации артефактов.</li>
+</ol>
 <h2 id="_2">Задачи</h2>
+<p>В рамках лабораторной работы требовалось:</p>
+<ul>
+<li>Сделать форк исходного репозитория на <strong>SourceCraft</strong></li>
+<li>Заполнить пропуски в <code>ipynb</code>-файле с заданием</li>
+<li>Загрузить и обработать датасет <code>StudentsPerformance.csv</code></li>
+<li>Рассчитать описательные статистики по числовым признакам и выполнить группировку данных</li>
+<li>Построить обязательные графики:<ul>
+<li>гистограмму распределения баллов по математике</li>
+<li>столбчатую диаграмму среднего балла по подготовке к тесту</li>
+<li>столбчатую диаграмму средних баллов по полу</li>
+<li>диаграмму рассеяния для баллов по математике и чтению</li>
+</ul>
+</li>
+<li>Построить дополнительную визуализацию</li>
+<li>Дополнить CI так, чтобы <strong>SourceCraft</strong>-раннер выполнял ноутбук и добавлял в артефакт текст, подтверждающий выполнение именно в CI-среде</li>
+</ul>
 <h2 id="_3">Ход работы</h2>
+<h3 id="1">1. Загрузка и первичный просмотр данных</h3>
+<p>В качестве исходных данных использовался датасет <code>StudentsPerformance.csv</code>, содержащий информацию об успеваемости студентов. В таблице представлены оценки по математике, чтению и письму, а также несколько категориальных признаков: пол, группа, уровень образования родителей, тип обеда и прохождение подготовительного курса.</p>
+<p>Для работы были импортированы библиотеки <code>pandas</code> и <code>matplotlib</code>:</p>
+<div class="highlight"><pre><span></span><code>import<span class="w"> </span>pandas<span class="w"> </span>as<span class="w"> </span>pd
+import<span class="w"> </span>matplotlib.pyplot<span class="w"> </span>as<span class="w"> </span>plt
+</code></pre></div>
+<p>Датасет был загружен из файла <code>data/StudentsPerformance.csv</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.read_csv<span class="o">(</span><span class="s2">&quot;data/StudentsPerformance.csv&quot;</span><span class="o">)</span>
+display<span class="o">(</span>df.head<span class="o">())</span>
+print<span class="o">(</span><span class="s2">&quot;Размер таблицы:&quot;</span>,<span class="w"> </span>df.shape<span class="o">)</span>
+</code></pre></div>
+<p>Размер исходного датасета:</p>
+<table>
+<thead>
+<tr>
+<th>Показатель</th>
+<th style="text-align: right;">Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Количество строк</td>
+<td style="text-align: right;">1000</td>
+</tr>
+<tr>
+<td>Количество столбцов</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+<p>Структура исходного датасета:</p>
+<table>
+<thead>
+<tr>
+<th>Столбец</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gender</code></td>
+<td>пол студента</td>
+</tr>
+<tr>
+<td><code>race/ethnicity</code></td>
+<td>группа студента</td>
+</tr>
+<tr>
+<td><code>parental level of education</code></td>
+<td>уровень образования родителей</td>
+</tr>
+<tr>
+<td><code>lunch</code></td>
+<td>тип обеда</td>
+</tr>
+<tr>
+<td><code>test preparation course</code></td>
+<td>прохождение подготовительного курса</td>
+</tr>
+<tr>
+<td><code>math score</code></td>
+<td>балл по математике</td>
+</tr>
+<tr>
+<td><code>reading score</code></td>
+<td>балл по чтению</td>
+</tr>
+<tr>
+<td><code>writing score</code></td>
+<td>балл по письму</td>
+</tr>
+</tbody>
+</table>
+<p>После загрузки были выведены первые строки таблицы, названия столбцов, типы данных и общая информация о датафрейме:</p>
+<p><div class="highlight"><pre><span></span><code>print<span class="o">(</span><span class="s2">&quot;Названия столбцов:&quot;</span><span class="o">)</span>
+print<span class="o">(</span>df.columns.tolist<span class="o">())</span>
+print<span class="o">(</span><span class="s2">&quot;\nТипы данных:&quot;</span><span class="o">)</span>
+print<span class="o">(</span>df.dtypes<span class="o">)</span>
+print<span class="o">(</span><span class="s2">&quot;\nИнформация о таблице:&quot;</span><span class="o">)</span>
+df.info<span class="o">()</span>
+</code></pre></div>
+<img alt="Первые строки датасета StudentsPerformance" src="../../images/lab9/data_head.png" /></p>
+<h3 id="2">2. Проверка пропусков и подготовка столбцов</h3>
+<p>После первичного просмотра была выполнена проверка пропущенных значений:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">missing_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.isna<span class="o">()</span>.sum<span class="o">()</span>
+print<span class="o">(</span><span class="s2">&quot;Количество пропущенных значений по столбцам:&quot;</span><span class="o">)</span>
+print<span class="o">(</span>missing_values<span class="o">)</span>
+print<span class="o">(</span><span class="s2">&quot;\nОбщее количество пропусков:&quot;</span>,<span class="w"> </span>missing_values.sum<span class="o">())</span>
+</code></pre></div>
+<p>Результат проверки:</p>
+<table>
+<thead>
+<tr>
+<th>Столбец</th>
+<th style="text-align: right;">Количество пропусков</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gender</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>race/ethnicity</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>parental level of education</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>lunch</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>test preparation course</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>math score</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>reading score</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>writing score</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Пропущенные значения в датасете не обнаружены, поэтому удаление или заполнение пропусков не потребовалось.</p>
+<p>Далее столбцы были переименованы:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.rename<span class="o">(</span><span class="nv">columns</span><span class="o">={</span>
+<span class="w">    </span><span class="s2">&quot;race/ethnicity&quot;</span>:<span class="w"> </span><span class="s2">&quot;race_ethnicity&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;parental level of education&quot;</span>:<span class="w"> </span><span class="s2">&quot;parent_education&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;test preparation course&quot;</span>:<span class="w"> </span><span class="s2">&quot;test_prep&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;math score&quot;</span>:<span class="w"> </span><span class="s2">&quot;math_score&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;reading score&quot;</span>:<span class="w"> </span><span class="s2">&quot;reading_score&quot;</span>,
+<span class="w">    </span><span class="s2">&quot;writing score&quot;</span>:<span class="w"> </span><span class="s2">&quot;writing_score&quot;</span>
+<span class="o">})</span>
+print<span class="o">(</span><span class="s2">&quot;Обновленные названия столбцов:&quot;</span><span class="o">)</span>
+print<span class="o">(</span>df.columns.tolist<span class="o">())</span>
+</code></pre></div>
+<p>Таблица переименования столбцов:</p>
+<table>
+<thead>
+<tr>
+<th>Исходное название</th>
+<th>Новое название</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>race/ethnicity</code></td>
+<td><code>race_ethnicity</code></td>
+</tr>
+<tr>
+<td><code>parental level of education</code></td>
+<td><code>parent_education</code></td>
+</tr>
+<tr>
+<td><code>test preparation course</code></td>
+<td><code>test_prep</code></td>
+</tr>
+<tr>
+<td><code>math score</code></td>
+<td><code>math_score</code></td>
+</tr>
+<tr>
+<td><code>reading score</code></td>
+<td><code>reading_score</code></td>
+</tr>
+<tr>
+<td><code>writing score</code></td>
+<td><code>writing_score</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Столбцы gender и lunch не переименовывались, так как их названия уже были короткими и удобными для обращения в коде.</p>
+</div>
+<h3 id="3">3. Создание новых признаков</h3>
+<p>После подготовки столбцов были созданы два новых признака: средний балл студента и категориальный уровень успеваемости:</p>
+<div class="highlight"><pre><span></span><code>df<span class="o">[</span><span class="s2">&quot;average_score&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df<span class="o">[[</span><span class="s2">&quot;math_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;reading_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;writing_score&quot;</span><span class="o">]]</span>.mean<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="m">1</span><span class="o">)</span>
+df<span class="o">[</span><span class="s2">&quot;score_level&quot;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.cut<span class="o">(</span>
+<span class="w">    </span>df<span class="o">[</span><span class="s2">&quot;average_score&quot;</span><span class="o">]</span>,
+<span class="w">    </span><span class="nv">bins</span><span class="o">=[</span><span class="m">0</span>,<span class="w"> </span><span class="m">60</span>,<span class="w"> </span><span class="m">75</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">100</span><span class="o">]</span>,
+<span class="w">    </span><span class="nv">labels</span><span class="o">=[</span><span class="s2">&quot;low&quot;</span>,<span class="w"> </span><span class="s2">&quot;medium&quot;</span>,<span class="w"> </span><span class="s2">&quot;high&quot;</span>,<span class="w"> </span><span class="s2">&quot;excellent&quot;</span><span class="o">]</span>,
+<span class="w">    </span><span class="nv">include_lowest</span><span class="o">=</span>True
+<span class="o">)</span>
+display<span class="o">(</span>df.head<span class="o">())</span>
+</code></pre></div>
+<p>Созданные признаки:</p>
+<table>
+<thead>
+<tr>
+<th>Признак</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>average_score</code></td>
+<td>средний балл по математике, чтению и письму</td>
+</tr>
+<tr>
+<td><code>score_level</code></td>
+<td>категория успеваемости на основе среднего балла</td>
+</tr>
+</tbody>
+</table>
+<p>Категории признака <code>score_level</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Категория</th>
+<th>Диапазон среднего балла</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>low</code></td>
+<td>0–60</td>
+</tr>
+<tr>
+<td><code>medium</code></td>
+<td>60–75</td>
+</tr>
+<tr>
+<td><code>high</code></td>
+<td>75–90</td>
+</tr>
+<tr>
+<td><code>excellent</code></td>
+<td>90–100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4">4. Описательная статистика и типы признаков</h3>
+<p>После создания новых признаков была рассчитана описательная статистика по числовым столбцам:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">statistics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.describe<span class="o">()</span>
+display<span class="o">(</span>statistics<span class="o">)</span>
+</code></pre></div>
+<p>Основные результаты описательной статистики:</p>
+<table>
+<thead>
+<tr>
+<th>Показатель</th>
+<th style="text-align: right;"><code>math_score</code></th>
+<th style="text-align: right;"><code>reading_score</code></th>
+<th style="text-align: right;"><code>writing_score</code></th>
+<th style="text-align: right;"><code>average_score</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count</td>
+<td style="text-align: right;">1000.00</td>
+<td style="text-align: right;">1000.00</td>
+<td style="text-align: right;">1000.00</td>
+<td style="text-align: right;">1000.00</td>
+</tr>
+<tr>
+<td>mean</td>
+<td style="text-align: right;">66.09</td>
+<td style="text-align: right;">69.17</td>
+<td style="text-align: right;">68.05</td>
+<td style="text-align: right;">67.77</td>
+</tr>
+<tr>
+<td>std</td>
+<td style="text-align: right;">15.16</td>
+<td style="text-align: right;">14.60</td>
+<td style="text-align: right;">15.20</td>
+<td style="text-align: right;">14.26</td>
+</tr>
+<tr>
+<td>min</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">17.00</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">9.00</td>
+</tr>
+<tr>
+<td>25%</td>
+<td style="text-align: right;">57.00</td>
+<td style="text-align: right;">59.00</td>
+<td style="text-align: right;">57.75</td>
+<td style="text-align: right;">58.33</td>
+</tr>
+<tr>
+<td>50%</td>
+<td style="text-align: right;">66.00</td>
+<td style="text-align: right;">70.00</td>
+<td style="text-align: right;">69.00</td>
+<td style="text-align: right;">68.33</td>
+</tr>
+<tr>
+<td>75%</td>
+<td style="text-align: right;">77.00</td>
+<td style="text-align: right;">79.00</td>
+<td style="text-align: right;">79.00</td>
+<td style="text-align: right;">77.67</td>
+</tr>
+<tr>
+<td>max</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">100.00</td>
+</tr>
+</tbody>
+</table>
+<p>Далее признаки были разделены на числовые и категориальные:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">numeric_features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.select_dtypes<span class="o">(</span><span class="nv">include</span><span class="o">=[</span><span class="s2">&quot;int64&quot;</span>,<span class="w"> </span><span class="s2">&quot;float64&quot;</span><span class="o">])</span>.columns.tolist<span class="o">()</span>
+<span class="nv">categorical_features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.select_dtypes<span class="o">(</span><span class="nv">include</span><span class="o">=[</span><span class="s2">&quot;object&quot;</span>,<span class="w"> </span><span class="s2">&quot;category&quot;</span><span class="o">])</span>.columns.tolist<span class="o">()</span>
+print<span class="o">(</span><span class="s2">&quot;Числовые признаки:&quot;</span><span class="o">)</span>
+print<span class="o">(</span>numeric_features<span class="o">)</span>
+print<span class="o">(</span><span class="s2">&quot;\nКатегориальные признаки:&quot;</span><span class="o">)</span>
+print<span class="o">(</span>categorical_features<span class="o">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Тип признаков</th>
+<th>Столбцы</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Числовые</td>
+<td><code>math_score</code>, <code>reading_score</code>, <code>writing_score</code>, <code>average_score</code></td>
+</tr>
+<tr>
+<td>Категориальные</td>
+<td><code>gender</code>, <code>race_ethnicity</code>, <code>parent_education</code>, <code>lunch</code>, <code>test_prep</code>, <code>score_level</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="5">5. Группировка данных и сравнение средних баллов</h3>
+<p>Далее были рассчитаны средние баллы для разных групп студентов:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">scores_by_test_prep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.groupby<span class="o">(</span><span class="s2">&quot;test_prep&quot;</span><span class="o">)[[</span><span class="s2">&quot;math_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;reading_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;writing_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;average_score&quot;</span><span class="o">]]</span>.mean<span class="o">()</span>
+<span class="nv">scores_by_gender</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.groupby<span class="o">(</span><span class="s2">&quot;gender&quot;</span><span class="o">)[[</span><span class="s2">&quot;math_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;reading_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;writing_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;average_score&quot;</span><span class="o">]]</span>.mean<span class="o">()</span>
+<span class="nv">scores_by_parent_education</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>df.groupby<span class="o">(</span><span class="s2">&quot;parent_education&quot;</span><span class="o">)[[</span><span class="s2">&quot;math_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;reading_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;writing_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;average_score&quot;</span><span class="o">]]</span>.mean<span class="o">()</span>
+print<span class="o">(</span><span class="s2">&quot;Средние баллы по прохождению подготовительного курса:&quot;</span><span class="o">)</span>
+display<span class="o">(</span>scores_by_test_prep<span class="o">)</span>
+print<span class="o">(</span><span class="s2">&quot;Средние баллы по полу:&quot;</span><span class="o">)</span>
+display<span class="o">(</span>scores_by_gender<span class="o">)</span>
+print<span class="o">(</span><span class="s2">&quot;Средние баллы по уровню образования родителей:&quot;</span><span class="o">)</span>
+display<span class="o">(</span>scores_by_parent_education<span class="o">)</span>
+</code></pre></div>
+<p>Средние баллы по прохождению подготовительного курса:</p>
+<table>
+<thead>
+<tr>
+<th>Подготовительный курс</th>
+<th style="text-align: right;"><code>math_score</code></th>
+<th style="text-align: right;"><code>reading_score</code></th>
+<th style="text-align: right;"><code>writing_score</code></th>
+<th style="text-align: right;"><code>average_score</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>completed</code></td>
+<td style="text-align: right;">69.70</td>
+<td style="text-align: right;">73.89</td>
+<td style="text-align: right;">74.42</td>
+<td style="text-align: right;">72.67</td>
+</tr>
+<tr>
+<td><code>none</code></td>
+<td style="text-align: right;">64.08</td>
+<td style="text-align: right;">66.53</td>
+<td style="text-align: right;">64.50</td>
+<td style="text-align: right;">65.04</td>
+</tr>
+</tbody>
+</table>
+<p>Средние баллы по полу:</p>
+<table>
+<thead>
+<tr>
+<th>Пол</th>
+<th style="text-align: right;"><code>math_score</code></th>
+<th style="text-align: right;"><code>reading_score</code></th>
+<th style="text-align: right;"><code>writing_score</code></th>
+<th style="text-align: right;"><code>average_score</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>female</code></td>
+<td style="text-align: right;">63.63</td>
+<td style="text-align: right;">72.61</td>
+<td style="text-align: right;">72.47</td>
+<td style="text-align: right;">69.57</td>
+</tr>
+<tr>
+<td><code>male</code></td>
+<td style="text-align: right;">68.73</td>
+<td style="text-align: right;">65.47</td>
+<td style="text-align: right;">63.31</td>
+<td style="text-align: right;">65.84</td>
+</tr>
+</tbody>
+</table>
+<p>Средние баллы по уровню образования родителей:</p>
+<table>
+<thead>
+<tr>
+<th>Уровень образования родителей</th>
+<th style="text-align: right;"><code>math_score</code></th>
+<th style="text-align: right;"><code>reading_score</code></th>
+<th style="text-align: right;"><code>writing_score</code></th>
+<th style="text-align: right;"><code>average_score</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>associate's degree</code></td>
+<td style="text-align: right;">67.88</td>
+<td style="text-align: right;">70.93</td>
+<td style="text-align: right;">69.90</td>
+<td style="text-align: right;">69.57</td>
+</tr>
+<tr>
+<td><code>bachelor's degree</code></td>
+<td style="text-align: right;">69.39</td>
+<td style="text-align: right;">73.00</td>
+<td style="text-align: right;">73.38</td>
+<td style="text-align: right;">71.92</td>
+</tr>
+<tr>
+<td><code>high school</code></td>
+<td style="text-align: right;">62.14</td>
+<td style="text-align: right;">64.70</td>
+<td style="text-align: right;">62.45</td>
+<td style="text-align: right;">63.10</td>
+</tr>
+<tr>
+<td><code>master's degree</code></td>
+<td style="text-align: right;">69.75</td>
+<td style="text-align: right;">75.37</td>
+<td style="text-align: right;">75.68</td>
+<td style="text-align: right;">73.60</td>
+</tr>
+<tr>
+<td><code>some college</code></td>
+<td style="text-align: right;">67.13</td>
+<td style="text-align: right;">69.46</td>
+<td style="text-align: right;">68.84</td>
+<td style="text-align: right;">68.48</td>
+</tr>
+<tr>
+<td><code>some high school</code></td>
+<td style="text-align: right;">63.50</td>
+<td style="text-align: right;">66.94</td>
+<td style="text-align: right;">64.89</td>
+<td style="text-align: right;">65.11</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6">6. Визуализация распределения баллов по математике</h3>
+<p>Для наглядного анализа была построена гистограмма распределения баллов по математике:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+plt.hist<span class="o">(</span>df<span class="o">[</span><span class="s2">&quot;math_score&quot;</span><span class="o">]</span>,<span class="w"> </span><span class="nv">bins</span><span class="o">=</span><span class="m">20</span>,<span class="w"> </span><span class="nv">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Распределение баллов по математике&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Балл по математике&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Количество студентов&quot;</span><span class="o">)</span>
+plt.grid<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.3<span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Распределение баллов по математике" src="../../images/lab9/math_score_distribution.png" /></p>
+<h3 id="7">7. Влияние подготовительного курса на средний балл</h3>
+<p>Далее была построена столбчатая диаграмма, показывающая средний балл студентов в зависимости от прохождения подготовительного курса:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">7</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+scores_by_test_prep<span class="o">[</span><span class="s2">&quot;average_score&quot;</span><span class="o">]</span>.plot<span class="o">(</span><span class="nv">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span>,<span class="w"> </span><span class="nv">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Средний балл в зависимости от подготовки к тесту&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Прохождение подготовительного курса&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Средний балл&quot;</span><span class="o">)</span>
+plt.xticks<span class="o">(</span><span class="nv">rotation</span><span class="o">=</span><span class="m">0</span><span class="o">)</span>
+plt.grid<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.3<span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Средний балл в зависимости от подготовки к тесту" src="../../images/lab9/test_prep_average_score.png" /></p>
+<h3 id="8">8. Сравнение средних баллов по полу</h3>
+<p>Для сравнения результатов по предметам была построена столбчатая диаграмма средних баллов для групп <code>female</code> и <code>male</code>:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">7</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+scores_by_gender<span class="o">[[</span><span class="s2">&quot;math_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;reading_score&quot;</span>,<span class="w"> </span><span class="s2">&quot;writing_score&quot;</span><span class="o">]]</span>.plot<span class="o">(</span>
+<span class="w">    </span><span class="nv">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span>,
+<span class="w">    </span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">)</span>,
+<span class="w">    </span><span class="nv">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span>
+<span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Средние баллы по предметам в зависимости от пола&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Пол&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Средний балл&quot;</span><span class="o">)</span>
+plt.xticks<span class="o">(</span><span class="nv">rotation</span><span class="o">=</span><span class="m">0</span><span class="o">)</span>
+plt.grid<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.3<span class="o">)</span>
+plt.legend<span class="o">(</span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Предмет&quot;</span><span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Средние баллы по предметам в зависимости от пола" src="../../images/lab9/gender_scores.png" /></p>
+<h3 id="9">9. Связь между баллами по математике и чтению</h3>
+<p>Для анализа связи между двумя числовыми признаками была построена диаграмма рассеяния. В ней каждая точка соответствует одному студенту:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">8</span>,<span class="w"> </span><span class="m">5</span><span class="o">))</span>
+plt.scatter<span class="o">(</span>df<span class="o">[</span><span class="s2">&quot;math_score&quot;</span><span class="o">]</span>,<span class="w"> </span>df<span class="o">[</span><span class="s2">&quot;reading_score&quot;</span><span class="o">]</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.6<span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Связь между баллами по математике и чтению&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Балл по математике&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Балл по чтению&quot;</span><span class="o">)</span>
+plt.grid<span class="o">(</span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.3<span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Связь между баллами по математике и чтению" src="../../images/lab9/math_reading_scatter.png" /></p>
+<h3 id="10">10. Дополнительная визуализация по уровню образования родителей</h3>
+<p>В качестве дополнительной визуализации была построена столбчатая диаграмма среднего балла в зависимости от уровня образования родителей. Для удобства значения были отсортированы по убыванию среднего балла:</p>
+<div class="highlight"><pre><span></span><code>plt.figure<span class="o">(</span><span class="nv">figsize</span><span class="o">=(</span><span class="m">10</span>,<span class="w"> </span><span class="m">6</span><span class="o">))</span>
+<span class="nv">scores_by_parent_education_sorted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>scores_by_parent_education.sort_values<span class="o">(</span>
+<span class="w">    </span><span class="nv">by</span><span class="o">=</span><span class="s2">&quot;average_score&quot;</span>,
+<span class="w">    </span><span class="nv">ascending</span><span class="o">=</span>False
+<span class="o">)</span>
+scores_by_parent_education_sorted<span class="o">[</span><span class="s2">&quot;average_score&quot;</span><span class="o">]</span>.plot<span class="o">(</span>
+<span class="w">    </span><span class="nv">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span>,
+<span class="w">    </span><span class="nv">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span>
+<span class="o">)</span>
+plt.title<span class="o">(</span><span class="s2">&quot;Средний балл в зависимости от уровня образования родителей&quot;</span><span class="o">)</span>
+plt.xlabel<span class="o">(</span><span class="s2">&quot;Уровень образования родителей&quot;</span><span class="o">)</span>
+plt.ylabel<span class="o">(</span><span class="s2">&quot;Средний балл&quot;</span><span class="o">)</span>
+plt.xticks<span class="o">(</span><span class="nv">rotation</span><span class="o">=</span><span class="m">35</span>,<span class="w"> </span><span class="nv">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="o">)</span>
+plt.grid<span class="o">(</span><span class="nv">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>,<span class="w"> </span><span class="nv">alpha</span><span class="o">=</span><span class="m">0</span>.3<span class="o">)</span>
+plt.show<span class="o">()</span>
+</code></pre></div>
+<p><img alt="Средний балл в зависимости от уровня образования родителей" src="../../images/lab9/parent_education_average_score.png" /></p>
+<h3 id="11-sourcecraft-ci">11. Автоматическое выполнение ноутбука в SourceCraft CI</h3>
+<p>CI должен не только создавать артефакты, но и подтверждать, что ноутбук был выполнен именно раннером <strong>SourceCraft</strong>. Для этого был изменен файл .<code>sourcecraft/ci.yaml</code>.</p>
+<p>В CI выполняются следующие действия:</p>
+<table>
+<thead>
+<tr>
+<th>Этап</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Установка зависимостей</td>
+<td>Устанавливаются библиотеки из <code>requirements.txt</code> и пакет <code>nbformat</code></td>
+</tr>
+<tr>
+<td>Изменение ноутбука</td>
+<td>В конец <code>lab_template.ipynb</code> добавляется markdown-ячейка с информацией о выполнении в SourceCraft CI</td>
+</tr>
+<tr>
+<td>Выполнение ноутбука</td>
+<td>Ноутбук запускается через <code>jupyter nbconvert</code></td>
+</tr>
+<tr>
+<td>Генерация HTML-отчета</td>
+<td>Выполненный ноутбук конвертируется в <code>report.html</code></td>
+</tr>
+<tr>
+<td>Сохранение артефактов</td>
+<td>В артефакты добавляются <code>executed_lab.ipynb</code> и <code>report.html</code></td>
+</tr>
+</tbody>
+</table>
+<p>Основная часть CI:</p>
+<div class="highlight"><pre><span></span><code>script:
+<span class="w">  </span>-<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+<span class="w">  </span>-<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>nbformat
+<span class="w">  </span>-<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>python<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;&#39;PY&#39;</span>
+<span class="s">    import nbformat</span>
+<span class="s">    import os</span>
+<span class="s">    import platform</span>
+<span class="s">    from datetime import datetime, timezone</span>
+<span class="s">    notebook_path = &quot;lab_template.ipynb&quot;</span>
+<span class="s">    with open(notebook_path, &quot;r&quot;, encoding=&quot;utf-8&quot;) as file:</span>
+<span class="s">        notebook = nbformat.read(file, as_version=4)</span>
+<span class="s">    runner_info = f&quot;&quot;&quot;</span>
+<span class="s">    ## SourceCraft CI execution</span>
+<span class="s">    This notebook was executed by the **SourceCraft CI runner**, not locally and not in Google Colaboratory.</span>
+<span class="s">    Execution metadata:</span>
+<span class="s">    - Environment: SourceCraft CI</span>
+<span class="s">    - Hostname: `{platform.node()}`</span>
+<span class="s">    - Python version: `{platform.python_version()}`</span>
+<span class="s">    - Working directory: `{os.getcwd()}`</span>
+<span class="s">    - UTC time: `{datetime.now(timezone.utc).isoformat()}`</span>
+<span class="s">    &quot;&quot;&quot;</span>
+<span class="s">    notebook.cells.append(nbformat.v4.new_markdown_cell(runner_info.strip()))</span>
+<span class="s">    with open(notebook_path, &quot;w&quot;, encoding=&quot;utf-8&quot;) as file:</span>
+<span class="s">        nbformat.write(notebook, file)</span>
+<span class="s">    PY</span>
+<span class="w">  </span>-<span class="w"> </span>jupyter<span class="w"> </span>nbconvert<span class="w"> </span>--to<span class="w"> </span>notebook<span class="w"> </span>--execute<span class="w"> </span>lab_template.ipynb<span class="w"> </span>--output<span class="w"> </span>executed_lab.ipynb
+<span class="w">  </span>-<span class="w"> </span>jupyter<span class="w"> </span>nbconvert<span class="w"> </span>--to<span class="w"> </span>html<span class="w"> </span>executed_lab.ipynb<span class="w"> </span>--output<span class="w"> </span>report.html
+</code></pre></div>
+<p>Результат работы CI:</p>
+<table>
+<thead>
+<tr>
+<th>Артефакт</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>executed_lab.ipynb</code></td>
+<td>выполненный ноутбук с добавленной ячейкой SourceCraft CI</td>
+</tr>
+<tr>
+<td><code>report.html</code></td>
+<td>HTML-версия выполненного ноутбука</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Подтверждение выполнения ноутбука в SourceCraft CI" src="../../images/lab9/sourcecraft_ci_execution.png" /></p>
 <h2 id="_4">Выводы</h2>
+<p>В ходе лабораторной работы был выполнен анализ датасета <code>StudentsPerformance.csv</code>: данные были загружены, проверены, подготовлены к работе, а также дополнены признаками <code>average_score</code> и <code>score_level</code>.</p>
+<p>С помощью <code>pandas</code> были рассчитаны статистики и выполнены группировки по подготовительному курсу, полу и уровню образования родителей. Анализ показал, что подготовительный курс связан с более высокими средними баллами, а результаты по предметам отличаются между группами <code>male</code> и `female``.</p>
+<p>Также были построены графики для визуального анализа данных и настроен <strong>SourceCraft CI</strong>, который автоматически выполняет ноутбук, добавляет подтверждение выполнения в CI-среде и сохраняет артефакты <code>executed_lab.ipynb</code> и <code>report.html</code>.</p>
+<p><strong>Ссылка на репозиторий:</strong></p>
+<p><a href="https://sourcecraft.dev/kiuyqu/itmo-python-lab-9?rev=main">Репозиторий с лабораторной работой</a></p>
 
 
 

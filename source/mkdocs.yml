@@ -28,6 +28,9 @@ nav:
       - Лабораторная работа 5: labs/lab5.md
       - Лабораторная работа 6: labs/lab6.md
       - Лабораторная работа 7: labs/lab7.md
+      - Лабораторная работа 8: labs/lab8.md
+      - Лабораторная работа 9: labs/lab9.md
+      - Лабораторная работа 10: labs/lab10.md
 
 markdown_extensions:
   - admonition

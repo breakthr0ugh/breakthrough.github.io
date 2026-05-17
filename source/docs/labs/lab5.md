@@ -448,6 +448,6 @@ def predict_price(features: HouseFeatures):
 
 Также была рассмотрена возможность интеграции обученной модели в веб-приложение. Был описан общий алгоритм интеграции модели с **Flask**, **Django** или **FastAPI**.
 
-Ссылка на доску Colab:
+**Ссылка на доску Colab:**
 
 [Доска Colab](https://colab.research.google.com/drive/1upkKMsBf1mXHOtvPoaw_OiF2IqYyd6hT?usp=sharing)

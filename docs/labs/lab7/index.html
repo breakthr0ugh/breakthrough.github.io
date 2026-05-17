@@ -12,8 +12,6 @@
         <link rel="prev" href="../lab6/">
       
       
-        <link rel="next" href="../lab8/">
-      
       
         
       
@@ -235,7 +233,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../lab1/" class="md-tabs__link">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -404,6 +402,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -670,6 +696,78 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ход работы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Описание задачи и набора данных
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-countvectorizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Базовая классификация с использованием CountVectorizer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-tf-idf-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. TF-IDF-векторизация текста
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Токенизация, стоп-слова и пунктуация
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-n-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Лемматизация и символьные n-граммы
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Самостоятельная работа
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -687,34 +785,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lab8/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Лабораторная работа 8
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -747,11 +817,602 @@
   
 
 
-<h1 id="7">Лабораторная работа 7: <em>название</em></h1>
+<h1 id="7">Лабораторная работа 7: <em>Анализ текста</em></h1>
 <h2 id="_1">Цели</h2>
+<ol>
+<li>Изучить основные этапы предобработки текстовых данных для задач машинного обучения.</li>
+<li>Освоить методы векторизации текста с использованием <code>CountVectorizer</code> и <code>TfidfVectorizer</code>.</li>
+<li>Рассмотреть влияние токенизации, стоп-слов, пунктуации и n-грамм на качество классификации текста.</li>
+<li>Построить модели для классификации твитов по тональности.</li>
+<li>Сравнить качество нескольких алгоритмов классификации на задаче анализа тональности.</li>
+</ol>
 <h2 id="_2">Задачи</h2>
+<p>В рамках лабораторной работы требовалось:</p>
+<ul>
+<li>Сформировать общий датафрейм с текстами твитов и метками классов, разделить данные на обучающую и тестовую выборки</li>
+<li>Изучить принцип работы n-грамм</li>
+<li>Выполнить базовую векторизацию текста с помощью <code>CountVectorizer</code></li>
+<li>Обучить модель <code>LogisticRegression</code> для классификации твитов</li>
+<li>Сравнить качество модели при использовании униграмм и триграмм</li>
+<li>Выполнить TF-IDF-векторизацию текста и сравнить результаты TF-IDF для униграмм, биграмм, триграмм и пентаграмм</li>
+<li>Применить токенизацию текста с помощью <code>word_tokenize</code></li>
+<li>Изучить влияние стоп-слов и пунктуации на качество классификации</li>
+<li>Выполнить лемматизацию отдельных слов с помощью <code>pymorphy3</code></li>
+<li>Сравнить <code>LogisticRegression</code> с двумя альтернативными алгоритмами классификации</li>
+<li>Оформить результаты <code>classification_report</code> в виде таблиц</li>
+</ul>
 <h2 id="_3">Ход работы</h2>
+<h3 id="1">1. Описание задачи и набора данных</h3>
+<p>Необходимо было построить модель, которая по тексту сообщения определяет его класс.</p>
+<p>В качестве исходных данных использовался корпус русскоязычных твитов RuTweetCorp. Данные были разделены на два CSV-файла.</p>
+<p>В файлах хранится несколько столбцов с информацией о твитах, однако для выполнения задачи классификации использовался только столбец с текстом сообщения. Для каждого набора данных дополнительно был создан столбец label, содержащий метку класса:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">positive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.read_csv<span class="o">(</span>
+<span class="w">    </span><span class="s1">&#39;positive.csv&#39;</span>,
+<span class="w">    </span><span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span>,
+<span class="w">    </span><span class="nv">usecols</span><span class="o">=[</span><span class="m">3</span><span class="o">]</span>,
+<span class="w">    </span><span class="nv">names</span><span class="o">=[</span><span class="s1">&#39;text&#39;</span><span class="o">]</span>
+<span class="o">)</span>
+positive<span class="o">[</span><span class="s1">&#39;label&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;positive&#39;</span>
+<span class="nv">negative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.read_csv<span class="o">(</span>
+<span class="w">    </span><span class="s1">&#39;negative.csv&#39;</span>,
+<span class="w">    </span><span class="nv">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span>,
+<span class="w">    </span><span class="nv">usecols</span><span class="o">=[</span><span class="m">3</span><span class="o">]</span>,
+<span class="w">    </span><span class="nv">names</span><span class="o">=[</span><span class="s1">&#39;text&#39;</span><span class="o">]</span>
+<span class="o">)</span>
+negative<span class="o">[</span><span class="s1">&#39;label&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;negative&#39;</span>
+<span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.concat<span class="o">([</span>positive,<span class="w"> </span>negative<span class="o">]</span>,<span class="w"> </span><span class="nv">ignore_index</span><span class="o">=</span>True<span class="o">)</span>
+</code></pre></div>
+<p>Структура итогового датафрейма:</p>
+<table>
+<thead>
+<tr>
+<th>Столбец</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>текст твита</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>метка тональности: <code>positive</code> или <code>negative</code></td>
+</tr>
+</tbody>
+</table>
+<p>После объединения положительных и отрицательных твитов данные были разделены на обучающую и тестовую выборки:</p>
+<div class="highlight"><pre><span></span><code>x_train,<span class="w"> </span>x_test,<span class="w"> </span>y_train,<span class="w"> </span><span class="nv">y_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>train_test_split<span class="o">(</span>
+<span class="w">    </span>df.text,
+<span class="w">    </span>df.label,
+<span class="w">    </span><span class="nv">test_size</span><span class="o">=</span><span class="m">0</span>.25,
+<span class="w">    </span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,
+<span class="w">    </span><span class="nv">stratify</span><span class="o">=</span>df.label
+<span class="o">)</span>
+</code></pre></div>
+<p>Параметр <code>stratify=df.label</code> использовался для сохранения одинакового соотношения положительных и отрицательных твитов в обучающей и тестовой выборках.</p>
+<p>Результат разбиения:</p>
+<table>
+<thead>
+<tr>
+<th>Выборка</th>
+<th>Содержимое</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x_train</code></td>
+<td>тексты твитов для обучения</td>
+</tr>
+<tr>
+<td><code>x_test</code></td>
+<td>тексты твитов для тестирования</td>
+</tr>
+<tr>
+<td><code>y_train</code></td>
+<td>метки классов для обучающей выборки</td>
+</tr>
+<tr>
+<td><code>y_test</code></td>
+<td>метки классов для тестовой выборки</td>
+</tr>
+</tbody>
+</table>
+<p>На этом этапе данные были подготовлены к векторизации и дальнейшему обучению моделей классификации.</p>
+<p><img alt="Полученные данные" src="../../images/lab7/dfsample5.png" /></p>
+<h3 id="2-countvectorizer">2. Базовая классификация с использованием <code>CountVectorizer</code></h3>
+<p>После подготовки данных был рассмотрен базовый способ представления текста в числовом виде — <code>CountVectorizer</code>.</p>
+<p>Перед применением векторизатора был рассмотрен принцип работы n-грамм. Для демонстрации работы n-грамм использовалась функция ngrams из библиотеки <code>nltk</code>:</p>
+<div class="highlight"><pre><span></span><code>from<span class="w"> </span>nltk<span class="w"> </span>import<span class="w"> </span>ngrams
+<span class="nv">sentence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Если б мне платили каждый раз&#39;</span>.split<span class="o">()</span>
+list<span class="o">(</span>ngrams<span class="o">(</span>sentence,<span class="w"> </span><span class="m">1</span><span class="o">))</span>
+list<span class="o">(</span>ngrams<span class="o">(</span>sentence,<span class="w"> </span><span class="m">2</span><span class="o">))</span>
+list<span class="o">(</span>ngrams<span class="o">(</span>sentence,<span class="w"> </span><span class="m">3</span><span class="o">))</span>
+</code></pre></div>
+<p>На первом этапе в качестве признаков использовались униграммы, то есть отдельные слова. Для этого был создан объект <code>CountVectorizer</code> с параметром <code>ngram_range=(1, 1)</code>:</p>
+<div class="highlight"><pre><span></span><code>from<span class="w"> </span>sklearn.linear_model<span class="w"> </span>import<span class="w"> </span>LogisticRegression
+from<span class="w"> </span>sklearn.feature_extraction.text<span class="w"> </span>import<span class="w"> </span>CountVectorizer
+<span class="nv">vectorizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CountVectorizer<span class="o">(</span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">))</span>
+<span class="nv">vectorized_x_train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vectorizer.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+</code></pre></div>
+<p>После векторизации была обучена модель логистической регрессии:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">clf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+clf.fit<span class="o">(</span>vectorized_x_train,<span class="w"> </span>y_train<span class="o">)</span>
+</code></pre></div>
+<p>Для тестовой выборки использовался метод <code>transform()</code>, так как словарь признаков уже был построен на обучающих данных:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">vectorized_x_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vectorizer.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clf.predict<span class="o">(</span>vectorized_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred<span class="o">))</span>
+</code></pre></div>
+<p>В результате была получена базовая модель классификации, которая использует частоты отдельных слов в твитах.</p>
+<p>Далее был проведен аналогичный эксперимент с триграммами. В этом случае признаками стали последовательности из трех подряд идущих слов:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">vectorizer_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CountVectorizer<span class="o">(</span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">3</span>,<span class="w"> </span><span class="m">3</span><span class="o">))</span>
+<span class="nv">vectorized_x_train_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vectorizer_3.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="nv">clf_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+clf_3.fit<span class="o">(</span>vectorized_x_train_3,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">vectorized_x_test_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vectorizer_3.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">pred_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clf_3.predict<span class="o">(</span>vectorized_x_test_3<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred_3<span class="o">))</span>
+</code></pre></div>
+<p>Результат для униграмм:</p>
+<table>
+<thead>
+<tr>
+<th>Класс</th>
+<th style="text-align: right;">Precision</th>
+<th style="text-align: right;">Recall</th>
+<th style="text-align: right;">F1-score</th>
+<th style="text-align: right;">Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>negative</code></td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">27937</td>
+</tr>
+<tr>
+<td><code>positive</code></td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">28772</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>0.76</strong></td>
+<td style="text-align: right;">56709</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">56709</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">56709</td>
+</tr>
+</tbody>
+</table>
+<p>Результат для триграмм:</p>
+<table>
+<thead>
+<tr>
+<th>Класс</th>
+<th style="text-align: right;">Precision</th>
+<th style="text-align: right;">Recall</th>
+<th style="text-align: right;">F1-score</th>
+<th style="text-align: right;">Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>negative</code></td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">27937</td>
+</tr>
+<tr>
+<td><code>positive</code></td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">28772</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>0.61</strong></td>
+<td style="text-align: right;">56709</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">56709</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">56709</td>
+</tr>
+</tbody>
+</table>
+<p>По результатам эксперимента триграммы показали более низкое качество по сравнению с униграммами. Это объясняется тем, что конкретные последовательности из трех слов редко совпадают между обучающей и тестовой выборками, особенно в коротких и неформальных текстах вроде твитов.</p>
+<h3 id="3-tf-idf-">3. TF-IDF-векторизация текста</h3>
+<p>После базовой векторизации с помощью <code>CountVectorizer</code> была рассмотрена TF-IDF-векторизация. TF-IDF учитывает не только частоту слова в конкретном тексте, но и то, насколько редко оно встречается во всем корпусе.</p>
+<p>Для работы использовался <code>TfidfVectorizer</code> из библиотеки <code>sklearn</code>:</p>
+<div class="highlight"><pre><span></span><code>from<span class="w"> </span>sklearn.feature_extraction.text<span class="w"> </span>import<span class="w"> </span>TfidfVectorizer
+</code></pre></div>
+<p>Сначала была построена модель на униграммах:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">tfidfvectorizer_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>TfidfVectorizer<span class="o">(</span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">))</span>
+<span class="nv">tfidf_vectorized_x_train_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>tfidfvectorizer_1.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="nv">clf_tfidf_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+clf_tfidf_1.fit<span class="o">(</span>tfidf_vectorized_x_train_1,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">tfidf_vectorized_x_test_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>tfidfvectorizer_1.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">pred_tfidf_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clf_tfidf_1.predict<span class="o">(</span>tfidf_vectorized_x_test_1<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred_tfidf_1<span class="o">))</span>
+</code></pre></div>
+<p>Далее по аналогии были рассчитаны результаты для биграмм, триграмм и пентаграмм. Это позволило сравнить, как длина n-грамм влияет на качество классификации.</p>
+<table>
+<thead>
+<tr>
+<th>Тип признаков</th>
+<th><code>ngram_range</code></th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Униграммы</td>
+<td><code>(1, 1)</code></td>
+<td>отдельные слова</td>
+</tr>
+<tr>
+<td>Биграммы</td>
+<td><code>(2, 2)</code></td>
+<td>пары слов</td>
+</tr>
+<tr>
+<td>Триграммы</td>
+<td><code>(3, 3)</code></td>
+<td>последовательности из трех слов</td>
+</tr>
+<tr>
+<td>Пентаграммы</td>
+<td><code>(5, 5)</code></td>
+<td>последовательности из пяти слов</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-">4. Токенизация, стоп-слова и пунктуация</h3>
+<p>Следующим этапом была рассмотрена более точная предобработка текста: токенизация, удаление стоп-слов и работа с пунктуацией.</p>
+<p>В работе использовался токенизатор <code>word_tokenize</code> из библиотеки <code>nltk</code>:</p>
+<div class="highlight"><pre><span></span><code>import<span class="w"> </span>nltk
+from<span class="w"> </span>nltk.tokenize<span class="w"> </span>import<span class="w"> </span>word_tokenize
+nltk.download<span class="o">(</span><span class="s1">&#39;punkt_tab&#39;</span><span class="o">)</span>
+nltk.download<span class="o">(</span><span class="s1">&#39;stopwords&#39;</span><span class="o">)</span>
+</code></pre></div>
+<p>Для удаления неинформативных слов были использованы русские стоп-слова из <code>nltk</code>, а также знаки пунктуации из модуля <code>string</code>:</p>
+<div class="highlight"><pre><span></span><code>from<span class="w"> </span>nltk.corpus<span class="w"> </span>import<span class="w"> </span>stopwords
+from<span class="w"> </span>string<span class="w"> </span>import<span class="w"> </span>punctuation
+<span class="nv">noise</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>stopwords.words<span class="o">(</span><span class="s1">&#39;russian&#39;</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>list<span class="o">(</span>punctuation<span class="o">)</span>
+</code></pre></div>
+<p>После этого был создан векторизатор, который использует токенизацию и исключает стоп-слова:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">smart_tokenizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CountVectorizer<span class="o">(</span>
+<span class="w">    </span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>,
+<span class="w">    </span><span class="nv">tokenizer</span><span class="o">=</span>word_tokenize,
+<span class="w">    </span><span class="nv">token_pattern</span><span class="o">=</span>None,
+<span class="w">    </span><span class="nv">stop_words</span><span class="o">=</span>noise
+<span class="o">)</span>
+<span class="nv">smart_vectorized_x_train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>smart_tokenizer.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="nv">clf_smart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+clf_smart.fit<span class="o">(</span>smart_vectorized_x_train,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">smart_vectorized_x_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>smart_tokenizer.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">pred_smart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clf_smart.predict<span class="o">(</span>smart_vectorized_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred_smart<span class="o">))</span>
+</code></pre></div>
+<p>Такой подход позволяет уменьшить количество шумовых признаков: из текста убираются частые служебные слова и отдельные знаки пунктуации.</p>
+<p>Далее был выполнен отдельный эксперимент, в котором пунктуация и стоп-слова не удалялись. Векторизатор использовал <code>word_tokenize</code>, но параметр <code>stop_words</code> не задавался:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">punct_vectorizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CountVectorizer<span class="o">(</span>
+<span class="w">    </span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>,
+<span class="w">    </span><span class="nv">tokenizer</span><span class="o">=</span>word_tokenize,
+<span class="w">    </span><span class="nv">token_pattern</span><span class="o">=</span>None
+<span class="o">)</span>
+<span class="nv">punct_vectorized_x_train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>punct_vectorizer.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="nv">clf_punct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+clf_punct.fit<span class="o">(</span>punct_vectorized_x_train,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">punct_vectorized_x_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>punct_vectorizer.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">pred_punct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clf_punct.predict<span class="o">(</span>punct_vectorized_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred_punct<span class="o">))</span>
+</code></pre></div>
+<p>Результат оказался значительно выше, чем у базовой модели, потому что в твитах пунктуация и смайлики часто несут информацию о тональности.</p>
+<h3 id="5-n-">5. Лемматизация и символьные n-граммы</h3>
+<p>После экспериментов с токенизацией была рассмотрена лемматизация — приведение слов к начальной форме.</p>
+<p>Для лемматизации использовалась библиотека <code>pymorphy3</code>:</p>
+<div class="highlight"><pre><span></span><code>!pip<span class="w"> </span>install<span class="w"> </span>pymorphy3
+from<span class="w"> </span>pymorphy3<span class="w"> </span>import<span class="w"> </span>MorphAnalyzer
+<span class="nv">pymorphy3_analyzer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>MorphAnalyzer<span class="o">()</span>
+</code></pre></div>
+<p>Работа анализатора была проверена на отдельном слове:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Если&#39;</span>,<span class="w"> </span><span class="s1">&#39;б&#39;</span>,<span class="w"> </span><span class="s1">&#39;мне&#39;</span>,<span class="w"> </span><span class="s1">&#39;платили&#39;</span>,<span class="w"> </span><span class="s1">&#39;каждый&#39;</span>,<span class="w"> </span><span class="s1">&#39;раз&#39;</span><span class="o">]</span>
+<span class="nv">ana</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pymorphy3_analyzer.parse<span class="o">(</span>sent<span class="o">[</span><span class="m">3</span><span class="o">])</span>
+ana<span class="o">[</span><span class="m">0</span><span class="o">]</span>.normal_form
+</code></pre></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr>
+<th>Исходное слово</th>
+<th>Начальная форма</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>платили</code></td>
+<td><code>платить</code></td>
+</tr>
+</tbody>
+</table>
+<p>Далее были рассмотрены символьные n-граммы. Для этого в <code>CountVectorizer</code> использовался параметр <code>analyzer='char'</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">char_vectorizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CountVectorizer<span class="o">(</span>
+<span class="w">    </span><span class="nv">analyzer</span><span class="o">=</span><span class="s1">&#39;char&#39;</span>,
+<span class="w">    </span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>
+<span class="o">)</span>
+<span class="nv">char_vectorized_x_train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>char_vectorizer.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="nv">clf_char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+clf_char.fit<span class="o">(</span>char_vectorized_x_train,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">char_vectorized_x_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>char_vectorizer.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">pred_char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>clf_char.predict<span class="o">(</span>char_vectorized_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred_char<span class="o">))</span>
+</code></pre></div>
+<p>Символьные признаки оказались полезными для данной задачи, потому что они позволяют модели учитывать отдельные символы из смайликов и пунктуации.</p>
+<h3 id="6">6. Самостоятельная работа</h3>
+<p>1) Сравнение моделей классификации</p>
+<p>В самостоятельной части лабораторной работы требовалось сравнить качество модели <code>LogisticRegression</code> с двумя альтернативными алгоритмами классификации. Для сравнения были выбраны:</p>
+<ul>
+<li><code>LogisticRegression</code> — базовая линейная модель</li>
+<li><code>XGBClassifier</code> — модель градиентного бустинга</li>
+<li><code>LinearSVC</code> — линейный метод опорных векторов</li>
+</ul>
+<p>Для всех моделей использовались одинаковые признаки, полученные с помощью <code>CountVectorizer</code> с токенизацией через <code>word_tokenize</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Чтобы сравнение моделей было корректным, менялся только алгоритм классификации. Способ векторизации текста оставался одинаковым для всех моделей.</p>
+</div>
+<p>Сначала была обучена модель <code>LogisticRegression</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">sr_vectorizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>CountVectorizer<span class="o">(</span>
+<span class="w">    </span><span class="nv">ngram_range</span><span class="o">=(</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>,
+<span class="w">    </span><span class="nv">tokenizer</span><span class="o">=</span>word_tokenize,
+<span class="w">    </span><span class="nv">token_pattern</span><span class="o">=</span>None
+<span class="o">)</span>
+<span class="nv">sr_x_train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sr_vectorizer.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="nv">sr_x_test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sr_vectorizer.transform<span class="o">(</span>x_test<span class="o">)</span>
+<span class="nv">lr_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+lr_model.fit<span class="o">(</span>sr_x_train,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">lr_pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>lr_model.predict<span class="o">(</span>sr_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>lr_pred<span class="o">))</span>
+</code></pre></div>
+<p>Далее был применен <code>XGBClassifier</code>. Так как эта модель работает с числовыми метками классов, значения <code>negative</code> и <code>positive</code> были преобразованы в 0 и 1:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">y_train_binary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>y_train.map<span class="o">({</span>
+<span class="w">    </span><span class="s1">&#39;negative&#39;</span>:<span class="w"> </span><span class="m">0</span>,
+<span class="w">    </span><span class="s1">&#39;positive&#39;</span>:<span class="w"> </span><span class="m">1</span>
+<span class="o">})</span>
+<span class="nv">y_test_binary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>y_test.map<span class="o">({</span>
+<span class="w">    </span><span class="s1">&#39;negative&#39;</span>:<span class="w"> </span><span class="m">0</span>,
+<span class="w">    </span><span class="s1">&#39;positive&#39;</span>:<span class="w"> </span><span class="m">1</span>
+<span class="o">})</span>
+</code></pre></div>
+<p>Для <code>XGBClassifier</code> были использованы параметры, указанные в задании:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">xgb_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>XGBClassifier<span class="o">(</span>
+<span class="w">    </span><span class="nv">learning_rate</span><span class="o">=</span><span class="m">0</span>.1,
+<span class="w">    </span><span class="nv">n_estimators</span><span class="o">=</span><span class="m">1000</span>,
+<span class="w">    </span><span class="nv">max_depth</span><span class="o">=</span><span class="m">5</span>,
+<span class="w">    </span><span class="nv">min_child_weight</span><span class="o">=</span><span class="m">3</span>,
+<span class="w">    </span><span class="nv">gamma</span><span class="o">=</span><span class="m">0</span>.2,
+<span class="w">    </span><span class="nv">subsample</span><span class="o">=</span><span class="m">0</span>.6,
+<span class="w">    </span><span class="nv">colsample_bytree</span><span class="o">=</span><span class="m">1</span>.0,
+<span class="w">    </span><span class="nv">objective</span><span class="o">=</span><span class="s1">&#39;binary:logistic&#39;</span>,
+<span class="w">    </span><span class="nv">nthread</span><span class="o">=</span><span class="m">4</span>,
+<span class="w">    </span><span class="nv">scale_pos_weight</span><span class="o">=</span><span class="m">1</span>,
+<span class="w">    </span><span class="nv">seed</span><span class="o">=</span><span class="m">27</span>,
+<span class="w">    </span><span class="nv">eval_metric</span><span class="o">=</span><span class="s1">&#39;logloss&#39;</span>
+<span class="o">)</span>
+xgb_model.fit<span class="o">(</span>sr_x_train,<span class="w"> </span>y_train_binary<span class="o">)</span>
+<span class="nv">xgb_pred_binary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>xgb_model.predict<span class="o">(</span>sr_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>
+<span class="w">    </span>y_test_binary,
+<span class="w">    </span>xgb_pred_binary,
+<span class="w">    </span><span class="nv">target_names</span><span class="o">=[</span><span class="s1">&#39;negative&#39;</span>,<span class="w"> </span><span class="s1">&#39;positive&#39;</span><span class="o">]</span>
+<span class="o">))</span>
+</code></pre></div>
+<p>В качестве второго альтернативного алгоритма был выбран <code>LinearSVC</code>:</p>
+<div class="highlight"><pre><span></span><code>from<span class="w"> </span>sklearn.svm<span class="w"> </span>import<span class="w"> </span>LinearSVC
+<span class="nv">svc_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LinearSVC<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">5000</span><span class="o">)</span>
+svc_model.fit<span class="o">(</span>sr_x_train,<span class="w"> </span>y_train<span class="o">)</span>
+<span class="nv">svc_pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>svc_model.predict<span class="o">(</span>sr_x_test<span class="o">)</span>
+print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>svc_pred<span class="o">))</span>
+</code></pre></div>
+<details class="info">
+<summary>Примечание</summary>
+<p>LinearSVC хорошо подходит для задач текстовой классификации, потому что эффективно работает с большим количеством разреженных признаков. После векторизации текста получается матрица большой размерности, и линейные модели обычно хорошо справляются с такими данными.</p>
+</details>
+<p>Для итогового сравнения были использованы метрики <code>precision</code>, <code>recall</code>, <code>f1-score</code> и <code>accuracy</code>, полученные с помощью <code>classification_report</code>.</p>
+<p>Итоговая сравнительная таблица:</p>
+<table>
+<thead>
+<tr>
+<th>Модель</th>
+<th style="text-align: right;">Accuracy</th>
+<th style="text-align: right;">Negative Precision</th>
+<th style="text-align: right;">Negative Recall</th>
+<th style="text-align: right;">Negative F1</th>
+<th style="text-align: right;">Positive Precision</th>
+<th style="text-align: right;">Positive Recall</th>
+<th style="text-align: right;">Positive F1</th>
+<th style="text-align: right;">Macro F1</th>
+<th style="text-align: right;">Weighted F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LogisticRegression</code></td>
+<td style="text-align: right;">0.998625</td>
+<td style="text-align: right;">0.998711</td>
+<td style="text-align: right;">0.998497</td>
+<td style="text-align: right;">0.998604</td>
+<td style="text-align: right;">0.998541</td>
+<td style="text-align: right;">0.998749</td>
+<td style="text-align: right;">0.998645</td>
+<td style="text-align: right;">0.998624</td>
+<td style="text-align: right;">0.998625</td>
+</tr>
+<tr>
+<td><code>XGBClassifier</code></td>
+<td style="text-align: right;">0.998660</td>
+<td style="text-align: right;">0.998568</td>
+<td style="text-align: right;">0.998711</td>
+<td style="text-align: right;">0.998640</td>
+<td style="text-align: right;">0.998749</td>
+<td style="text-align: right;">0.998610</td>
+<td style="text-align: right;">0.998679</td>
+<td style="text-align: right;">0.998660</td>
+<td style="text-align: right;">0.998660</td>
+</tr>
+<tr>
+<td><code>LinearSVC</code></td>
+<td style="text-align: right;">0.998783</td>
+<td style="text-align: right;">0.998712</td>
+<td style="text-align: right;">0.998819</td>
+<td style="text-align: right;">0.998765</td>
+<td style="text-align: right;">0.998853</td>
+<td style="text-align: right;">0.998749</td>
+<td style="text-align: right;">0.998801</td>
+<td style="text-align: right;">0.998783</td>
+<td style="text-align: right;">0.998783</td>
+</tr>
+</tbody>
+</table>
+<p>По результатам сравнения все три модели показали очень высокое качество: <code>accuracy</code> выше 0.998. Лучший результат получил <code>LinearSVC</code>: <code>accuracy</code>, <code>macro f1-score</code> и <code>weighted f1-score</code> составили 0.998783.</p>
+<p><code>XGBClassifier</code> немного превзошел <code>LogisticRegression</code>, но разница между моделями минимальна. Почти идеальные метрики связаны с тем, что при векторизации сохранялись пунктуация и смайлики — сильные признаки тональности в данном датасете.</p>
+<p>2) Сравнение TF-IDF для разных n-грамм</p>
+<p>Во второй части самостоятельной работы требовалось сравнить качество <code>LogisticRegression</code> при использовании TF-IDF-векторизации для разных n-грамм: униграмм, биграмм, триграмм и пентаграмм.</p>
+<p>Для этого была создана функция, которая обучает <code>TfidfVectorizer</code>, применяет логистическую регрессию и выводит <code>classification_report</code>:</p>
+<div class="highlight"><pre><span></span><code>def<span class="w"> </span>train_tfidf_logreg<span class="o">(</span>ngram_range,<span class="w"> </span>model_name<span class="o">)</span>:
+<span class="w">    </span><span class="nv">vectorizer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>TfidfVectorizer<span class="o">(</span><span class="nv">ngram_range</span><span class="o">=</span>ngram_range<span class="o">)</span>
+
+<span class="w">    </span><span class="nv">x_train_tfidf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vectorizer.fit_transform<span class="o">(</span>x_train<span class="o">)</span>
+<span class="w">    </span><span class="nv">x_test_tfidf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vectorizer.transform<span class="o">(</span>x_test<span class="o">)</span>
+
+<span class="w">    </span><span class="nv">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>LogisticRegression<span class="o">(</span><span class="nv">random_state</span><span class="o">=</span><span class="m">42</span>,<span class="w"> </span><span class="nv">max_iter</span><span class="o">=</span><span class="m">1000</span><span class="o">)</span>
+<span class="w">    </span>model.fit<span class="o">(</span>x_train_tfidf,<span class="w"> </span>y_train<span class="o">)</span>
+
+<span class="w">    </span><span class="nv">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>model.predict<span class="o">(</span>x_test_tfidf<span class="o">)</span>
+
+<span class="w">    </span>print<span class="o">(</span>f<span class="s1">&#39;Результаты для {model_name}&#39;</span><span class="o">)</span>
+<span class="w">    </span>print<span class="o">(</span>classification_report<span class="o">(</span>y_test,<span class="w"> </span>pred<span class="o">))</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>get_metrics_table<span class="o">(</span>y_test,<span class="w"> </span>pred,<span class="w"> </span>model_name<span class="o">)</span>
+</code></pre></div>
+<p>Затем были обучены модели для четырех вариантов признаков:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">tfidf_results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
+tfidf_results.append<span class="o">(</span>train_tfidf_logreg<span class="o">((</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;TF-IDF unigrams&#39;</span><span class="o">))</span>
+tfidf_results.append<span class="o">(</span>train_tfidf_logreg<span class="o">((</span><span class="m">2</span>,<span class="w"> </span><span class="m">2</span><span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;TF-IDF bigrams&#39;</span><span class="o">))</span>
+tfidf_results.append<span class="o">(</span>train_tfidf_logreg<span class="o">((</span><span class="m">3</span>,<span class="w"> </span><span class="m">3</span><span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;TF-IDF trigrams&#39;</span><span class="o">))</span>
+tfidf_results.append<span class="o">(</span>train_tfidf_logreg<span class="o">((</span><span class="m">5</span>,<span class="w"> </span><span class="m">5</span><span class="o">)</span>,<span class="w"> </span><span class="s1">&#39;TF-IDF pentagrams&#39;</span><span class="o">))</span>
+<span class="nv">tfidf_results_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pd.concat<span class="o">(</span>tfidf_results,<span class="w"> </span><span class="nv">ignore_index</span><span class="o">=</span>True<span class="o">)</span>
+tfidf_results_table
+</code></pre></div>
+<p>Результаты сравнения:</p>
+<table>
+<thead>
+<tr>
+<th>Модель</th>
+<th style="text-align: right;">Accuracy</th>
+<th style="text-align: right;">Negative Precision</th>
+<th style="text-align: right;">Negative Recall</th>
+<th style="text-align: right;">Negative F1</th>
+<th style="text-align: right;">Positive Precision</th>
+<th style="text-align: right;">Positive Recall</th>
+<th style="text-align: right;">Positive F1</th>
+<th style="text-align: right;">Macro F1</th>
+<th style="text-align: right;">Weighted F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TF-IDF unigrams</code></td>
+<td style="text-align: right;">0.7588</td>
+<td style="text-align: right;">0.7650</td>
+<td style="text-align: right;">0.7366</td>
+<td style="text-align: right;">0.7506</td>
+<td style="text-align: right;">0.7532</td>
+<td style="text-align: right;">0.7803</td>
+<td style="text-align: right;">0.7665</td>
+<td style="text-align: right;">0.7585</td>
+<td style="text-align: right;">0.7586</td>
+</tr>
+<tr>
+<td><code>TF-IDF bigrams</code></td>
+<td style="text-align: right;">0.7131</td>
+<td style="text-align: right;">0.7237</td>
+<td style="text-align: right;">0.6754</td>
+<td style="text-align: right;">0.6988</td>
+<td style="text-align: right;">0.7040</td>
+<td style="text-align: right;">0.7497</td>
+<td style="text-align: right;">0.7261</td>
+<td style="text-align: right;">0.7124</td>
+<td style="text-align: right;">0.7126</td>
+</tr>
+<tr>
+<td><code>TF-IDF trigrams</code></td>
+<td style="text-align: right;">0.6466</td>
+<td style="text-align: right;">0.7227</td>
+<td style="text-align: right;">0.4587</td>
+<td style="text-align: right;">0.5612</td>
+<td style="text-align: right;">0.6120</td>
+<td style="text-align: right;">0.8291</td>
+<td style="text-align: right;">0.7042</td>
+<td style="text-align: right;">0.6327</td>
+<td style="text-align: right;">0.6338</td>
+</tr>
+<tr>
+<td><code>TF-IDF pentagrams</code></td>
+<td style="text-align: right;">0.5597</td>
+<td style="text-align: right;">0.9538</td>
+<td style="text-align: right;">0.1116</td>
+<td style="text-align: right;">0.1998</td>
+<td style="text-align: right;">0.5356</td>
+<td style="text-align: right;">0.9948</td>
+<td style="text-align: right;">0.6963</td>
+<td style="text-align: right;">0.4480</td>
+<td style="text-align: right;">0.4517</td>
+</tr>
+</tbody>
+</table>
+<p>Лучшее качество показала TF-IDF-векторизация на униграммах: <code>accuracy</code> составила 0.7588, <code>macro f1-score</code> — 0.7585. При использовании биграмм качество снизилось до <code>accuracy</code> 0.7131, а триграммы дали еще более низкий результат — 0.6466.</p>
+<p>Худший результат показали пентаграммы: <code>accuracy</code> составила 0.5597, <code>macro f1-score</code> — 0.4480. Это связано с тем, что длинные n-граммы редко повторяются между обучающей и тестовой выборками, поэтому признаки становятся слишком разреженными.</p>
 <h2 id="_4">Выводы</h2>
+<p>В ходе лабораторной работы были изучены основные методы анализа и предобработки текстовых данных для задачи классификации твитов по тональности. Были загружены положительные и отрицательные твиты, сформирован общий датафрейм, выполнено разбиение на обучающую и тестовую выборки, а затем применены разные способы векторизации текста.</p>
+<p>Базовая модель <code>LogisticRegression</code> с <code>CountVectorizer</code> на униграммах показала более устойчивый результат, чем модель на триграммах. Это связано с тем, что отдельные слова чаще повторяются в коротких текстах, а длинные n-граммы делают пространство признаков более разреженным.</p>
+<p>В самостоятельной части были сравнены <code>LogisticRegression</code>, <code>XGBClassifier</code> и <code>LinearSVC</code>. Лучший результат показал <code>LinearSVC</code>: <code>accuracy</code>, <code>macro f1-score</code> и <code>weighted f1-score</code> составили 0.998783. Также было выявлено, что среди TF-IDF-признаков лучше всего сработали униграммы: <code>accuracy</code> 0.7588, <code>macro f1-score</code> 0.7585.</p>
+<p>Отдельно было показано, что пунктуация и смайлики не всегда являются шумом. В задаче анализа тональности они могут быть важными признаками, так как напрямую выражают эмоциональную окраску сообщения. В результате работы были получены навыки подготовки текстовых данных, векторизации и оценки качества моделей классификации.</p>
+<p><strong>Cсылка на доску Colab:</strong></p>
+<p><a href="https://colab.research.google.com/drive/1ALCryhXV_C7Q0XyGIAa9djpwIjYMC9fx?usp=sharing">Доска Colab</a></p>
 
 
 
